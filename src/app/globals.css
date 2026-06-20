@@ -1,26 +1,58 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Backgrounds */
+  --background: #0a1020;
+  --surface: #0f1a2e;
+  --surface-2: #13203a;
+  --border: #1e2c47;
+
+  /* Text */
+  --foreground: #e8eefc;
+  --muted: #7e8ba8;
+
+  /* Brand / accents */
+  --gold: #c6a23a;
+  --gold-strong: #d8b44a;
+  --green: #3dd68c;
+  --red: #f2555a;
+  --blue: #3b82f6;
 }
 
 @theme inline {
   --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-border: var(--border);
   --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-gold: var(--gold);
+  --color-gold-strong: var(--gold-strong);
+  --color-green: var(--green);
+  --color-red: var(--red);
+  --color-blue: var(--blue);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  border-color: var(--border);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Numbers/metrics use the mono font like TonyBot */
+.tabular {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+input::placeholder {
+  color: var(--muted);
 }

@@ -1,0 +1,81 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String              @id @default(cuid())
+  email        String              @unique
+  name         String?
+  passwordHash String
+  createdAt    DateTime            @default(now())
+
+  credentials  ExchangeCredential[]
+  bots         Bot[]
+  snapshots    EquitySnapshot[]
+}
+
+model ExchangeCredential {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  exchange    String   @default("binance")
+  mode        String   @default("paper") // paper | testnet | live
+  apiKeyEnc   String   // AES-256-GCM ciphertext
+  apiSecretEnc String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([userId, exchange])
+}
+
+model Bot {
+  id               String   @id @default(cuid())
+  userId           String
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name             String
+  pair             String   @default("BTC_USDT_Perp")
+  status           String   @default("stopped") // running | paused | stopped
+  mode             String   @default("paper")
+
+  // Grid config
+  lowerPrice       Float
+  upperPrice       Float
+  grids            Int      @default(20)
+  invested         Float    @default(100)
+  leverage         Float    @default(1)
+
+  // Live state (paper)
+  entryPrice       Float    @default(0)
+  positionNotional Float    @default(0)
+  realizedPnl      Float    @default(0)
+  unrealizedPnl    Float    @default(0)
+
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  trades           Trade[]
+}
+
+model Trade {
+  id        String   @id @default(cuid())
+  botId     String
+  bot       Bot      @relation(fields: [botId], references: [id], onDelete: Cascade)
+  side      String   // buy | sell
+  price     Float
+  qty       Float
+  pnl       Float    @default(0)
+  createdAt DateTime @default(now())
+}
+
+model EquitySnapshot {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  equity    Float
+  createdAt DateTime @default(now())
+}
