@@ -11,20 +11,20 @@ export function Logo({ size = 56 }: { size?: number }) {
       {/* Shield */}
       <path
         d="M32 3 56 11V31C56 47 45 57 32 61C19 57 8 47 8 31V11L32 3Z"
-        fill="#0e2a5e"
-        stroke="#d8b44a"
+        fill="#1a1018"
+        stroke="#f472b6"
         strokeWidth="2.5"
       />
       <path
         d="M32 9 50 15V31C50 43.5 41.5 51.5 32 55C22.5 51.5 14 43.5 14 31V15L32 9Z"
-        stroke="#d8b44a"
+        stroke="#f472b6"
         strokeWidth="1.5"
         opacity="0.5"
       />
       {/* Letter J */}
       <path
         d="M38 20H42V36C42 41 38.5 44 33.5 44C29 44 25.5 41.5 25 37H29C29.3 39 31 40.2 33.3 40.2C36 40.2 38 38.5 38 35.5V20Z"
-        fill="#d8b44a"
+        fill="#f472b6"
       />
     </svg>
   );

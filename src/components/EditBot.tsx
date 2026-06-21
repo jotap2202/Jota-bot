@@ -94,7 +94,7 @@ export function EditBot({ bot }: { bot: BotCfg }) {
               <button
                 onClick={save}
                 disabled={saving}
-                className="rounded-lg bg-gold hover:bg-gold-strong text-[#0a1020] font-semibold px-5 py-2 text-sm transition-colors disabled:opacity-60"
+                className="rounded-lg bg-gold hover:bg-gold-strong text-[#0a070a] font-semibold px-5 py-2 text-sm transition-colors disabled:opacity-60"
               >
                 {saving ? "Guardando..." : "Guardar"}
               </button>

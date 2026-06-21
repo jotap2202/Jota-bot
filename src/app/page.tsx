@@ -15,7 +15,7 @@ export default function Landing() {
           <a href="#features" className="text-muted hover:text-foreground hidden sm:inline">Características</a>
           <a href="#pricing" className="text-muted hover:text-foreground hidden sm:inline">Precios</a>
           <Link href="/login" className="text-muted hover:text-foreground">Entrar</Link>
-          <Link href="/register" className="rounded-lg bg-gold hover:bg-gold-strong text-[#0a1020] font-semibold px-4 py-2 transition-colors">
+          <Link href="/register" className="rounded-lg bg-gold hover:bg-gold-strong text-[#0a070a] font-semibold px-4 py-2 transition-colors">
             Crear cuenta
           </Link>
         </nav>
@@ -34,7 +34,7 @@ export default function Landing() {
           real. Empezá en modo paper —sin dinero real— y pasá a live cuando estés listo.
         </p>
         <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
-          <DemoButton className="rounded-lg bg-gold hover:bg-gold-strong text-[#0a1020] font-semibold px-7 py-3.5 text-lg transition-colors">
+          <DemoButton className="rounded-lg bg-gold hover:bg-gold-strong text-[#0a070a] font-semibold px-7 py-3.5 text-lg transition-colors">
             Probar la demo gratis →
           </DemoButton>
           <Link href="/register" className="rounded-lg border border-border px-7 py-3.5 text-lg text-foreground hover:bg-surface transition-colors">
@@ -121,7 +121,7 @@ export default function Landing() {
       <section className="max-w-4xl mx-auto px-6 py-20 text-center">
         <h2 className="text-3xl font-bold">¿Listo para automatizar tu trading?</h2>
         <div className="mt-8">
-          <DemoButton className="rounded-lg bg-gold hover:bg-gold-strong text-[#0a1020] font-semibold px-8 py-4 text-lg transition-colors">
+          <DemoButton className="rounded-lg bg-gold hover:bg-gold-strong text-[#0a070a] font-semibold px-8 py-4 text-lg transition-colors">
             Probar la demo ahora →
           </DemoButton>
         </div>
@@ -166,7 +166,7 @@ function Plan({
       }`}
     >
       {highlight && (
-        <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-gold text-[#0a1020] text-xs font-semibold px-3 py-1">
+        <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-gold text-[#0a070a] text-xs font-semibold px-3 py-1">
           Más popular
         </span>
       )}
@@ -187,7 +187,7 @@ function Plan({
         href={href}
         className={`mt-6 rounded-lg py-2.5 text-center font-semibold transition-colors ${
           highlight
-            ? "bg-gold hover:bg-gold-strong text-[#0a1020]"
+            ? "bg-gold hover:bg-gold-strong text-[#0a070a]"
             : "border border-border hover:bg-background text-foreground"
         }`}
       >

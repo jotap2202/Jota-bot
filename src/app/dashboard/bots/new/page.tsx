@@ -158,7 +158,7 @@ export default function NewBotPage() {
           <button
             onClick={() => create(true)}
             disabled={saving || !pair}
-            className="rounded-lg bg-gold hover:bg-gold-strong text-[#0a1020] font-semibold px-5 py-2.5 transition-colors disabled:opacity-60"
+            className="rounded-lg bg-gold hover:bg-gold-strong text-[#0a070a] font-semibold px-5 py-2.5 transition-colors disabled:opacity-60"
           >
             Crear y arrancar
           </button>

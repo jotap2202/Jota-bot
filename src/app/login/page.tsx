@@ -52,7 +52,7 @@ export default function LoginPage() {
               onClick={() => setLang(l)}
               className={`px-3 py-1 transition-colors ${
                 lang === l
-                  ? "bg-gold-strong text-[#0a1020]"
+                  ? "bg-gold-strong text-[#0a070a]"
                   : "bg-surface text-muted hover:text-foreground"
               }`}
             >
@@ -107,7 +107,7 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full rounded-lg bg-gold hover:bg-gold-strong text-[#0a1020] font-semibold py-3 transition-colors disabled:opacity-60"
+            className="w-full rounded-lg bg-gold hover:bg-gold-strong text-[#0a070a] font-semibold py-3 transition-colors disabled:opacity-60"
           >
             {loading ? "..." : t("Entrar", "Sign in")}
           </button>

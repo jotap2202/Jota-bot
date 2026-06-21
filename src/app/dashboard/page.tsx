@@ -27,7 +27,7 @@ export default async function OverviewPage() {
         </div>
         <Link
           href="/dashboard/bots/new"
-          className="rounded-lg bg-gold hover:bg-gold-strong text-[#0a1020] font-semibold px-4 py-2.5 flex items-center gap-2 transition-colors"
+          className="rounded-lg bg-gold hover:bg-gold-strong text-[#0a070a] font-semibold px-4 py-2.5 flex items-center gap-2 transition-colors"
         >
           <span className="text-lg leading-none">+</span> New bot
         </Link>

@@ -1,19 +1,19 @@
 @import "tailwindcss";
 
 :root {
-  /* Backgrounds */
-  --background: #0a1020;
-  --surface: #0f1a2e;
-  --surface-2: #13203a;
-  --border: #1e2c47;
+  /* Backgrounds — black with a subtle pink tint */
+  --background: #0a070a;
+  --surface: #161016;
+  --surface-2: #1f1620;
+  --border: #2e2230;
 
   /* Text */
-  --foreground: #e8eefc;
-  --muted: #7e8ba8;
+  --foreground: #f7eef4;
+  --muted: #9c8b97;
 
-  /* Brand / accents */
-  --gold: #c6a23a;
-  --gold-strong: #d8b44a;
+  /* Brand / accents — pink (kept var names so utilities stay valid) */
+  --gold: #ec4899;
+  --gold-strong: #f472b6;
   --green: #3dd68c;
   --red: #f2555a;
   --blue: #3b82f6;

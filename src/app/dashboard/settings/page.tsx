@@ -134,7 +134,7 @@ export default function SettingsPage() {
           <button
             type="submit"
             disabled={saving}
-            className="self-start rounded-lg bg-gold hover:bg-gold-strong text-[#0a1020] font-semibold px-5 py-2.5 transition-colors disabled:opacity-60"
+            className="self-start rounded-lg bg-gold hover:bg-gold-strong text-[#0a070a] font-semibold px-5 py-2.5 transition-colors disabled:opacity-60"
           >
             {saving ? "Guardando..." : "Guardar credenciales"}
           </button>

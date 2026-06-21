@@ -44,8 +44,8 @@ export function EquityChart({
         <YAxis domain={[min * 0.998, max * 1.002]} hide />
         <Tooltip
           contentStyle={{
-            background: "#0f1a2e",
-            border: "1px solid #1e2c47",
+            background: "#161016",
+            border: "1px solid #2e2230",
             borderRadius: 8,
             fontSize: 12,
           }}

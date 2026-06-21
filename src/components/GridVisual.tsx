@@ -28,12 +28,12 @@ export function GridVisual({
   return (
     <svg width="100%" height={h} viewBox={`0 0 320 ${h}`} preserveAspectRatio="none" className="overflow-visible">
       {/* track */}
-      <line x1="160" y1={top} x2="160" y2={bottom} stroke="#1e2c47" strokeWidth="1" />
+      <line x1="160" y1={top} x2="160" y2={bottom} stroke="#2e2230" strokeWidth="1" />
 
       {levels.map((lvl, i) => {
         const ly = y(lvl);
         const isBuy = lvl < current;
-        const color = isBuy ? "#3dd68c" : "#c6a23a";
+        const color = isBuy ? "#3dd68c" : "#ec4899";
         return (
           <g key={i}>
             <line x1="120" y1={ly} x2="200" y2={ly} stroke={color} strokeWidth="1" opacity="0.5" />
@@ -43,15 +43,15 @@ export function GridVisual({
       })}
 
       {/* current price band */}
-      <line x1="40" y1={cy} x2="280" y2={cy} stroke="#e8eefc" strokeWidth="1.5" strokeDasharray="4 3" />
-      <rect x="206" y={cy - 9} width="74" height="18" rx="4" fill="#e8eefc" />
-      <text x="243" y={cy + 3.5} textAnchor="middle" fontSize="10" fontWeight="700" fill="#0a1020">
+      <line x1="40" y1={cy} x2="280" y2={cy} stroke="#f7eef4" strokeWidth="1.5" strokeDasharray="4 3" />
+      <rect x="206" y={cy - 9} width="74" height="18" rx="4" fill="#f7eef4" />
+      <text x="243" y={cy + 3.5} textAnchor="middle" fontSize="10" fontWeight="700" fill="#0a070a">
         {fmt(current)}
       </text>
 
       {/* bounds labels */}
-      <text x="40" y={top + 4} fontSize="9" fill="#66718c">{fmt(upper)}</text>
-      <text x="40" y={bottom} fontSize="9" fill="#66718c">{fmt(lower)}</text>
+      <text x="40" y={top + 4} fontSize="9" fill="#9c8b97">{fmt(upper)}</text>
+      <text x="40" y={bottom} fontSize="9" fill="#9c8b97">{fmt(lower)}</text>
     </svg>
   );
 }

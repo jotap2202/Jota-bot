@@ -82,7 +82,7 @@ export default function BacktestPage() {
           <button
             onClick={run}
             disabled={loading}
-            className="rounded-lg bg-gold hover:bg-gold-strong text-[#0a1020] font-semibold px-5 py-2.5 transition-colors disabled:opacity-60"
+            className="rounded-lg bg-gold hover:bg-gold-strong text-[#0a070a] font-semibold px-5 py-2.5 transition-colors disabled:opacity-60"
           >
             {loading ? "Calculando..." : "Ejecutar backtest"}
           </button>
