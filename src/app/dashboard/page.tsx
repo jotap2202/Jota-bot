@@ -4,6 +4,7 @@ import { getUserId } from "@/lib/auth";
 import { getPortfolio, getPortfolioCurve } from "@/lib/bots";
 import { usd, pct, pnlColor } from "@/lib/format";
 import { EquityChart } from "@/components/EquityChart";
+import { AutoRefresh } from "@/components/AutoRefresh";
 
 export default async function OverviewPage() {
   const userId = await getUserId();
@@ -15,6 +16,7 @@ export default async function OverviewPage() {
 
   return (
     <div className="max-w-6xl mx-auto flex flex-col gap-5">
+      <AutoRefresh interval={10000} />
       <div className="flex items-start justify-between">
         <div>
           <h1 className="text-3xl font-bold">Overview</h1>

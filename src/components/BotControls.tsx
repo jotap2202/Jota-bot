@@ -2,28 +2,41 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useToast } from "./ToastProvider";
 
 export function BotControls({ id, status }: { id: string; status: string }) {
   const router = useRouter();
+  const { toast } = useToast();
   const [busy, setBusy] = useState(false);
 
   async function setStatus(s: string) {
     setBusy(true);
-    await fetch(`/api/bots/${id}`, {
+    const res = await fetch(`/api/bots/${id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ status: s }),
     });
     setBusy(false);
-    router.refresh();
+    if (res.ok) {
+      toast(s === "running" ? "Bot arrancado" : "Bot pausado");
+      router.refresh();
+    } else {
+      toast("No se pudo actualizar el bot", "error");
+    }
   }
 
   async function remove() {
     if (!confirm("¿Eliminar este bot? No se puede deshacer.")) return;
     setBusy(true);
-    await fetch(`/api/bots/${id}`, { method: "DELETE" });
-    router.push("/dashboard/bots");
-    router.refresh();
+    const res = await fetch(`/api/bots/${id}`, { method: "DELETE" });
+    if (res.ok) {
+      toast("Bot eliminado");
+      router.push("/dashboard/bots");
+      router.refresh();
+    } else {
+      setBusy(false);
+      toast("No se pudo eliminar", "error");
+    }
   }
 
   return (

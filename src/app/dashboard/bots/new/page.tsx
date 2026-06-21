@@ -3,11 +3,13 @@
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useToast } from "@/components/ToastProvider";
 
 type Pair = { pair: string; price: number };
 
 export default function NewBotPage() {
   const router = useRouter();
+  const { toast } = useToast();
   const [pairs, setPairs] = useState<Pair[]>([]);
   const [name, setName] = useState("");
   const [pair, setPair] = useState("");
@@ -55,11 +57,13 @@ export default function NewBotPage() {
     setSaving(false);
     if (res.ok) {
       const d = await res.json();
+      toast(start ? "Bot creado y arrancado" : "Bot creado");
       router.push(`/dashboard/bots/${d.id}`);
       router.refresh();
     } else {
       const d = await res.json().catch(() => ({}));
       setError(d.error || "Error al crear el bot");
+      toast(d.error || "Error al crear el bot", "error");
     }
   }
 

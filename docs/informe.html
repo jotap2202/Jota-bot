@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<style>
+  @page { size: A4; margin: 18mm 16mm; }
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, "Helvetica Neue", Arial, sans-serif;
+    color: #1a2236; font-size: 11.5px; line-height: 1.6; margin: 0;
+  }
+  h1, h2, h3 { color: #0e2a5e; margin: 0 0 8px; }
+  h2 {
+    font-size: 17px; margin-top: 26px; padding-bottom: 6px;
+    border-bottom: 2px solid #d8b44a;
+  }
+  h3 { font-size: 13px; margin-top: 16px; color: #1a2236; }
+  p { margin: 0 0 10px; }
+  .muted { color: #5a6party; }
+  .muted { color: #66718c; }
+  strong { color: #0e2a5e; }
+
+  /* Cover */
+  .cover {
+    background: linear-gradient(135deg, #0a1020 0%, #12305e 100%);
+    color: #fff; border-radius: 14px; padding: 38px 34px; margin-bottom: 26px;
+  }
+  .brand { display: flex; align-items: center; gap: 12px; margin-bottom: 26px; }
+  .brand .name { font-size: 18px; font-weight: 800; letter-spacing: .5px; }
+  .cover h1 { color: #fff; font-size: 30px; line-height: 1.2; margin: 0; }
+  .cover .gold { color: #d8b44a; }
+  .cover .sub { color: #b9c4dd; font-size: 13px; margin-top: 12px; max-width: 78%; }
+  .cover .tag {
+    display: inline-block; margin-top: 20px; font-size: 10px; letter-spacing: .5px;
+    background: rgba(216,180,74,.18); color: #d8b44a; border: 1px solid rgba(216,180,74,.4);
+    padding: 5px 11px; border-radius: 20px;
+  }
+
+  table { width: 100%; border-collapse: collapse; margin: 8px 0 14px; font-size: 11px; }
+  th, td { text-align: left; padding: 7px 10px; border-bottom: 1px solid #e3e8f2; }
+  th { background: #f4f6fb; color: #0e2a5e; font-weight: 700; }
+
+  .callout {
+    border-radius: 10px; padding: 12px 16px; margin: 12px 0; font-size: 11px;
+  }
+  .callout.good { background: #eafaf1; border: 1px solid #b6e6c9; }
+  .callout.warn { background: #fdf3e7; border: 1px solid #f0d4a8; }
+  .callout.info { background: #eef2fb; border: 1px solid #cdd8f0; }
+  .callout .lbl { font-weight: 700; color: #0e2a5e; display: block; margin-bottom: 3px; }
+
+  .box {
+    background: #f7f9fc; border: 1px solid #e3e8f2; border-radius: 10px;
+    padding: 14px 16px; margin: 12px 0; font-family: "SF Mono", Menlo, monospace; font-size: 10.5px;
+  }
+  ul, ol { margin: 0 0 12px; padding-left: 20px; }
+  li { margin-bottom: 5px; }
+  .pill { color: #0e2a5e; font-weight: 700; }
+  .footer-note { font-size: 9.5px; color: #8a93a8; font-style: italic; margin-top: 6px; }
+  .avoid-break { break-inside: avoid; }
+  .num { font-family: "SF Mono", Menlo, monospace; }
+</style>
+</head>
+<body>
+
+  <div class="cover">
+    <div class="brand">
+      <svg width="34" height="34" viewBox="0 0 64 64" fill="none">
+        <path d="M32 3 56 11V31C56 47 45 57 32 61C19 57 8 47 8 31V11L32 3Z" fill="#0e2a5e" stroke="#d8b44a" stroke-width="2.5"/>
+        <path d="M38 20H42V36C42 41 38.5 44 33.5 44C29 44 25.5 41.5 25 37H29C29.3 39 31 40.2 33.3 40.2C36 40.2 38 38.5 38 35.5V20Z" fill="#d8b44a"/>
+      </svg>
+      <span class="name">JOTA BOT</span>
+    </div>
+    <h1>Cómo funciona Jota Bot<br><span class="gold">Estrategia y rentabilidad</span></h1>
+    <p class="sub">Informe explicativo de la estrategia de grid trading que ejecuta la plataforma. Pensado para entender el producto y presentarlo a clientes.</p>
+    <span class="tag">GRID TRADING · AUTOMATIZADO · 24/7</span>
+  </div>
+
+  <h2>1. Resumen en una frase</h2>
+  <p>Jota Bot automatiza una estrategia de <strong>grid trading</strong> (rejilla): coloca una red de órdenes de compra y de venta a distintos precios y <strong>gana con la volatilidad</strong> —compra barato y vende caro de forma repetida, sin intentar adivinar hacia dónde va el mercado.</p>
+
+  <h2>2. La idea central</h2>
+  <p>El precio de una cripto no sube ni baja en línea recta: <strong>oscila</strong> constantemente. El grid trading convierte esas oscilaciones en beneficio. En lugar de "comprar y esperar", el bot:</p>
+  <ol>
+    <li>Define un <strong>rango de precio</strong> (mínimo y máximo) donde espera que el precio se mueva.</li>
+    <li>Divide ese rango en muchos <strong>niveles equiespaciados</strong> (la rejilla o <em>grid</em>).</li>
+    <li><span class="pill">Compra</span> cuando el precio baja y cruza un nivel; <span class="pill">vende</span> cuando sube y cruza el siguiente.</li>
+    <li>Cada par compra-venta deja un <strong>pequeño beneficio</strong>. Repetido cientos de veces, suma.</li>
+  </ol>
+  <p>Es una estrategia <strong>neutral</strong>: no necesita que el mercado suba para ganar, solo que <strong>se mueva</strong> dentro del rango.</p>
+
+  <h2>3. La estrategia paso a paso</h2>
+  <p>Parámetros que define el usuario al crear un bot:</p>
+  <table>
+    <tr><th>Parámetro</th><th>Qué es</th></tr>
+    <tr><td>Par</td><td>El activo a operar (BTC, ETH, SOL…)</td></tr>
+    <tr><td>Rango (inferior–superior)</td><td>Los precios entre los que opera la rejilla</td></tr>
+    <tr><td>Grids</td><td>Cuántos niveles tiene la rejilla (ej. 20)</td></tr>
+    <tr><td>Inversión</td><td>Capital asignado al bot (USDT)</td></tr>
+    <tr><td>Apalancamiento</td><td>Multiplicador del capital (1x–20x)</td></tr>
+  </table>
+  <p>Con eso, el bot calcula automáticamente la <strong>separación entre niveles</strong> y el <strong>tamaño de cada orden</strong>, y opera solo 24/7:</p>
+  <div class="box">
+    Precio sube y cruza un nivel  →  VENDE una porción (toma beneficio)<br>
+    Precio baja y cruza un nivel  →  COMPRA una porción (acumula barato)
+  </div>
+
+  <h2>4. Ejemplo numérico</h2>
+  <div class="avoid-break">
+  <p>Bot sobre <strong>BTC</strong>, rango <span class="num">55.000 – 67.000</span> USDT, <strong>20 grids</strong>, <span class="num">100</span> USDT de inversión, <strong>2x</strong> de apalancamiento:</p>
+  <ul>
+    <li>Capital efectivo: <span class="num">100 × 2 = 200 USDT</span></li>
+    <li>Separación entre niveles: <span class="num">(67.000 − 55.000) ÷ 20 = 600 USDT</span></li>
+    <li>Tamaño por orden: <span class="num">200 ÷ 20 ÷ 61.000 ≈ 0,000164 BTC</span></li>
+    <li>Beneficio por ciclo (1 compra + 1 venta): <span class="num">600 × 0,000164 ≈ 0,10 USDT</span></li>
+  </ul>
+  <p>Parece poco… pero si el precio oscila y completa <strong>~300 ciclos</strong> en dos semanas, son ~30 USDT sobre 100 invertidos. La clave es la <strong>repetición</strong>: más volatilidad lateral, más ciclos, más beneficio.</p>
+  </div>
+
+  <h2>5. Por qué (y cuándo) es rentable</h2>
+  <p>El grid trading es rentable porque <strong>monetiza la volatilidad</strong>, no la dirección:</p>
+  <ul>
+    <li><strong>No hay que predecir el mercado.</strong> Gana mientras el precio oscile.</li>
+    <li><strong>Compra y venta sistemáticas.</strong> Compra en las caídas y vende en las subidas, sin emoción.</li>
+    <li><strong>Funciona 24/7.</strong> Aprovecha movimientos que una persona se perdería.</li>
+    <li><strong>El beneficio se acumula</strong> por volumen de micro-operaciones.</li>
+    <li><strong>Escala</strong> con más capital, más pares o más apalancamiento.</li>
+  </ul>
+  <div class="callout good"><span class="lbl">Escenario ideal</span>Mercados <strong>laterales con mucha oscilación</strong> (rango definido y mucho "ruido"): es donde el grid rinde mejor.</div>
+
+  <h2>6. Cuándo NO rinde (honestidad = confianza)</h2>
+  <p>Explicar los límites con transparencia da credibilidad al producto:</p>
+  <ul>
+    <li><strong>Tendencia fuerte y sostenida:</strong> si el precio rompe muy por encima del rango, el bot ya vendió todo (coste de oportunidad); si rompe muy por debajo, acumula con pérdida no realizada hasta que vuelva.</li>
+    <li><strong>Salida del rango:</strong> fuera de los límites configurados, el bot deja de operar.</li>
+    <li><strong>El apalancamiento amplifica</strong> ganancias <em>y</em> pérdidas (riesgo de liquidación).</li>
+    <li><strong>Comisiones:</strong> si la separación entre grids es muy pequeña, los <em>fees</em> se comen el beneficio. Hay que dimensionar bien la rejilla.</li>
+  </ul>
+  <div class="callout warn"><span class="lbl">Mensaje honesto para el cliente</span>"Jota Bot no adivina el futuro ni garantiza beneficios. Es una herramienta que ejecuta una estrategia probada de forma disciplinada y sin emociones, optimizada para mercados volátiles."</div>
+
+  <h2>7. Gestión del riesgo integrada</h2>
+  <ul>
+    <li><strong>El bot nunca retira fondos:</strong> claves con permisos de solo lectura + futuros, nunca de retiro.</li>
+    <li><strong>Credenciales cifradas</strong> con AES-256-GCM; el secreto nunca se guarda ni se muestra en texto plano.</li>
+    <li><strong>Rango acotado:</strong> el usuario controla entre qué precios opera.</li>
+    <li><strong>Backtest antes de arriesgar:</strong> simula la estrategia sobre datos históricos reales (retorno, APR, máximo drawdown, nº de operaciones).</li>
+  </ul>
+
+  <h2>8. Modos de operación</h2>
+  <table>
+    <tr><th>Modo</th><th>Qué hace</th><th>Riesgo</th></tr>
+    <tr><td><strong>Paper</strong></td><td>Simulación con precios reales, sin dinero</td><td>Cero</td></tr>
+    <tr><td><strong>Testnet</strong></td><td>Conexión al entorno de pruebas del exchange</td><td>Cero</td></tr>
+    <tr><td><strong>Live</strong></td><td>Operativa real con tu cuenta de Binance</td><td>Real</td></tr>
+  </table>
+  <p>El usuario empieza en <strong>paper</strong>, valida la estrategia, y solo pasa a <strong>live</strong> cuando está convencido.</p>
+
+  <h2>9. Argumentario de venta</h2>
+  <div class="callout info">
+    <strong>Jota Bot es trading con disciplina, no con suerte.</strong> Automatiza una estrategia de grid que gana con la volatilidad del cripto —comprando en las bajadas y vendiendo en las subidas— de forma sistemática, 24/7 y sin emociones. El usuario define el rango y el riesgo; el bot ejecuta. Con backtest para validar, modo simulación sin riesgo para empezar, y seguridad de nivel bancario en las credenciales.
+  </div>
+  <p class="footer-note">Aviso: operar con criptomonedas conlleva riesgo de pérdida. Jota Bot es una herramienta de automatización y no constituye asesoramiento financiero ni garantiza beneficios.</p>
+
+</body>
+</html>

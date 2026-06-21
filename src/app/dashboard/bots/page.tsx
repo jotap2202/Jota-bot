@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { getUserId } from "@/lib/auth";
 import { getBots } from "@/lib/bots";
 import { usd, pct, pnlColor } from "@/lib/format";
+import { AutoRefresh } from "@/components/AutoRefresh";
 
 export default async function BotsPage() {
   const userId = await getUserId();
@@ -11,6 +12,7 @@ export default async function BotsPage() {
 
   return (
     <div className="max-w-6xl mx-auto flex flex-col gap-5">
+      <AutoRefresh interval={10000} />
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-bold">Bots</h1>
         <Link

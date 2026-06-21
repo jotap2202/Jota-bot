@@ -5,6 +5,9 @@ import { getBotDetail } from "@/lib/bots";
 import { usd, pct, pnlColor } from "@/lib/format";
 import { EquityChart } from "@/components/EquityChart";
 import { BotControls } from "@/components/BotControls";
+import { GridVisual } from "@/components/GridVisual";
+import { AutoRefresh } from "@/components/AutoRefresh";
+import { EditBot } from "@/components/EditBot";
 
 export default async function BotDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const userId = await getUserId();
@@ -18,6 +21,7 @@ export default async function BotDetailPage({ params }: { params: Promise<{ id: 
 
   return (
     <div className="max-w-5xl mx-auto flex flex-col gap-5">
+      {bot.status === "running" && <AutoRefresh interval={8000} />}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           <Link href="/dashboard/bots" className="text-muted hover:text-foreground">←</Link>
@@ -32,7 +36,20 @@ export default async function BotDetailPage({ params }: { params: Promise<{ id: 
             </p>
           </div>
         </div>
-        <BotControls id={bot.id} status={bot.status} />
+        <div className="flex gap-2">
+          <EditBot
+            bot={{
+              id: bot.id,
+              name: bot.name,
+              lowerPrice: bot.lowerPrice,
+              upperPrice: bot.upperPrice,
+              grids: bot.grids,
+              invested: bot.invested,
+              leverage: bot.leverage,
+            }}
+          />
+          <BotControls id={bot.id} status={bot.status} />
+        </div>
       </div>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 rounded-xl border border-border overflow-hidden">
@@ -54,8 +71,29 @@ export default async function BotDetailPage({ params }: { params: Promise<{ id: 
         </div>
 
         <div className="rounded-xl border border-border bg-surface p-5">
+          <div className="flex items-center justify-between">
+            <div className="text-xs font-semibold tracking-wide text-muted">REJILLA</div>
+            <div className="flex items-center gap-3 text-[10px] text-muted">
+              <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-green" />Compra</span>
+              <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-gold" />Venta</span>
+            </div>
+          </div>
+          <div className="mt-2">
+            <GridVisual
+              lower={bot.lowerPrice}
+              upper={bot.upperPrice}
+              levels={sim.gridLevels}
+              current={sim.currentPrice}
+              height={240}
+            />
+          </div>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+        <div className="lg:col-span-3 rounded-xl border border-border bg-surface p-5">
           <div className="text-xs font-semibold tracking-wide text-muted">CONFIG</div>
-          <dl className="mt-3 text-sm flex flex-col gap-2">
+          <dl className="mt-3 text-sm grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-8 gap-y-2">
             <Item k="Rango" v={`$${bot.lowerPrice} – $${bot.upperPrice}`} />
             <Item k="Grids" v={String(bot.grids)} />
             <Item k="Separación" v={`$${((bot.upperPrice - bot.lowerPrice) / bot.grids).toFixed(bot.lowerPrice < 1 ? 5 : 2)}`} />

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useToast } from "@/components/ToastProvider";
 
 type CredState = {
   connected: boolean;
@@ -13,6 +14,7 @@ type CredState = {
 
 export default function SettingsPage() {
   const router = useRouter();
+  const { toast } = useToast();
   const [cred, setCred] = useState<CredState | null>(null);
   const [apiKey, setApiKey] = useState("");
   const [apiSecret, setApiSecret] = useState("");
@@ -25,7 +27,8 @@ export default function SettingsPage() {
     setCred(await res.json());
   }
   useEffect(() => {
-    load();
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    void load();
   }, []);
 
   async function save(e: React.FormEvent) {
@@ -40,17 +43,20 @@ export default function SettingsPage() {
     setSaving(false);
     if (res.ok) {
       setMsg("Credenciales guardadas y cifradas ✓");
+      toast("Credenciales guardadas y cifradas");
       setApiKey("");
       setApiSecret("");
       load();
     } else {
       const d = await res.json().catch(() => ({}));
       setMsg(d.error || "Error al guardar");
+      toast(d.error || "Error al guardar", "error");
     }
   }
 
   async function disconnect() {
     await fetch("/api/credentials", { method: "DELETE" });
+    toast("Exchange desconectado");
     load();
   }
 
