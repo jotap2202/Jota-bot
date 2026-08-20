@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "prisma generate && prisma db push && next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint",
     "postinstall": "prisma generate",
     "db:push": "prisma db push",
     "test": "node --experimental-strip-types --import ./pruebas/registrar.mjs pruebas/metricas.ts",
@@ -14,6 +14,7 @@
     "test:agente": "node --experimental-strip-types --import ./pruebas/registrar.mjs pruebas/agente.ts",
     "test:agente-db": "node --experimental-strip-types --import ./pruebas/registrar.mjs pruebas/agente-db.ts",
     "test:secretos": "node --experimental-strip-types --import ./pruebas/registrar.mjs pruebas/secretos.ts",
+    "test:acceso": "node --experimental-strip-types --import ./pruebas/registrar.mjs pruebas/acceso.ts",
     "test:agente-real": "node --experimental-strip-types --import ./pruebas/registrar.mjs pruebas/agente-real.ts",
     "test:email-real": "node --experimental-strip-types --import ./pruebas/registrar.mjs pruebas/email-real.ts",
     "preview:seed": "node --experimental-strip-types --import ./pruebas/registrar.mjs pruebas/sembrar-preview.ts",
@@ -31,11 +32,14 @@
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
+    "@eslint/eslintrc": "^3.3.6",
     "@tailwindcss/postcss": "^4.0.0",
     "@types/bcryptjs": "^2.4.6",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "eslint": "^9.39.5",
+    "eslint-config-next": "^15.5.21",
     "prisma": "^6.2.1",
     "tailwindcss": "^4.0.0",
     "typescript": "^5"

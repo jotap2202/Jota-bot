@@ -54,9 +54,7 @@ async function limpiar() {
   await prisma.notificacion.deleteMany({ where: { titulo: { startsWith: "Maui Mobile Detailing" } } });
 }
 
-let n = 0;
 function chat(tenantId: string, mensaje: string, hilo = "e2e-1"): ConsultaEntrante {
-  n++;
   return {
     tenantId, canal: "website_chat", hiloExterno: hilo,
     mensaje, recibidoEn: new Date(),

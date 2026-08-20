@@ -4,6 +4,7 @@ import { auth } from "@/auth";
 import { AuthForm } from "@/components/AuthForm";
 import { googleConfigurado } from "@/lib/config-auth";
 import { idiomaActual } from "@/lib/idioma-servidor";
+import { destinoSeguro } from "@/lib/destino-seguro";
 import type { Idioma } from "@/lib/contenido";
 
 export const metadata = {
@@ -57,7 +58,9 @@ export default async function AccederPage({
 }) {
   const session = await auth();
   const { next, error } = await searchParams;
-  const destino = typeof next === "string" && next.startsWith("/") ? next : "/diagnostico";
+  // `startsWith("/")` no alcanza: "//evil.com" lo cumple y el navegador lo
+  // resuelve como URL absoluta a otro dominio. Ver destinoSeguro().
+  const destino = destinoSeguro(next) ?? "/diagnostico";
 
   if (session?.user) redirect(destino);
 

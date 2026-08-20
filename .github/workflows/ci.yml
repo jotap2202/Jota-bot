@@ -41,9 +41,10 @@ jobs:
       PANEL_SECRET: secreto-falso-solo-para-el-build-de-ci
       PANEL_PASSWORD: password-falso-solo-para-el-build-de-ci
     steps:
-      - uses: actions/checkout@v4
+      # v5: las v4 corren sobre Node 20, que GitHub ya deprecó y fuerza a 24.
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: 22
           cache: npm
@@ -59,9 +60,17 @@ jobs:
 
       # Solo jota-agency tiene pruebas por ahora. Corren con el TypeScript
       # nativo de Node 22, sin dependencias de testing.
+      #
+      # Acá van únicamente las que NO necesitan base de datos ni claves de API:
+      # las de Postgres real (test:agente-db) y las que gastan tokens
+      # (test:agente-real, test:e2e) se corren a mano antes de un release.
       - name: Pruebas
         if: matrix.app == 'jota-agency'
-        run: npm test
+        run: |
+          npm test
+          npm run test:acceso
+          npm run test:agente
+          npm run test:secretos
 
       # Se invoca next build directo en vez de `npm run build`: el script de
       # jota-agency incluye `prisma db push`, que escribiría el schema contra
