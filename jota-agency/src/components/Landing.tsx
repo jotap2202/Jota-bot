@@ -6,6 +6,7 @@ import { T, EMAIL_CONTACTO, COOKIE_IDIOMA, IDIOMA_POR_DEFECTO, type Idioma } fro
 import { CompletarEmpresa } from "@/components/CompletarEmpresa";
 import { useAuthSubmit } from "@/lib/useAuthSubmit";
 import { useDiagnostico } from "@/lib/useDiagnostico";
+import { EVENTOS, medir } from "@/lib/eventos-conversion";
 
 /** Link de mail con el asunto ya escrito, para que la consulta llegue ordenada. */
 const mailto = (asunto: string) => `mailto:${EMAIL_CONTACTO}?subject=${encodeURIComponent(asunto)}`;
@@ -189,7 +190,7 @@ export function Landing({
                 </button>
               ))}
             </div>
-            <a href="#diagnostico" className="nav-cta">{t.nav.cta}</a>
+            <a href="#diagnostico" className="nav-cta" onClick={() => medir(EVENTOS.CTA_CLICK, { lugar: "nav" })}>{t.nav.cta}</a>
           </div>
         </div>
       </nav>
@@ -224,8 +225,8 @@ export function Landing({
 
               <div className="line-mask"><span style={{ animationDelay: ".9s" }}>
                 <div className="hero-cta">
-                  <a href="#diagnostico" className="btn-gold">{t.hero.cta1} <span aria-hidden>→</span></a>
-                  <a href="#proceso" className="btn-ghost">{t.hero.cta2}</a>
+                  <a href="#diagnostico" className="btn-gold" onClick={() => medir(EVENTOS.CTA_CLICK, { lugar: "hero" })}>{t.hero.cta1} <span aria-hidden>→</span></a>
+                  <a href="#proceso" className="btn-ghost" onClick={() => medir(EVENTOS.CTA_CLICK, { lugar: "hero_secundario" })}>{t.hero.cta2}</a>
                 </div>
               </span></div>
             </div>
@@ -396,7 +397,7 @@ export function Landing({
           </h2>
           <p className="reveal" style={{ marginTop: 20, fontSize: 14, color: "var(--dim)" }}>{t.cierre.sub}</p>
           <div className="reveal" style={{ marginTop: 32 }}>
-            <a href="#diagnostico" className="btn-gold">{t.cierre.cta} <span aria-hidden>→</span></a>
+            <a href="#diagnostico" className="btn-gold" onClick={() => medir(EVENTOS.CTA_CLICK, { lugar: "cierre" })}>{t.cierre.cta} <span aria-hidden>→</span></a>
           </div>
           <p className="reveal" style={{ marginTop: 20, fontSize: 14, color: "var(--dim)" }}>
             {t.cierre.oEscribinos}{" "}

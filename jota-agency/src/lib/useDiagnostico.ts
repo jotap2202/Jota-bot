@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import { EVENTOS, medir } from "@/lib/eventos-conversion";
 
 export type MensajesDiagnostico = {
   error: string;
@@ -41,7 +42,13 @@ export function useDiagnostico(idioma: string, mensajes: MensajesDiagnostico) {
         throw new Error(data.error || mensajes.error);
       }
 
-      setEsDemo(res.headers.get("X-Diagnostico-Modo") === "demo");
+      const modoDemo = res.headers.get("X-Diagnostico-Modo") === "demo";
+      setEsDemo(modoDemo);
+
+      // Recién acá: el servidor aceptó y va a responder. Se distingue el modo
+      // demo —sin ANTHROPIC_API_KEY, respuesta enlatada— para que el funnel no
+      // cuente como diagnóstico real algo que no pasó por el modelo.
+      medir(EVENTOS.DIAGNOSTICO_PEDIDO, { modo: modoDemo ? "demo" : "real" });
 
       // J va escribiendo: mostramos el texto a medida que llega
       const reader = res.body?.getReader();

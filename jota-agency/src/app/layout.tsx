@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Space_Grotesk, IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import { Providers } from "@/components/Providers";
 import { RegistrarSW } from "@/components/RegistrarSW";
 import { EMAIL_CONTACTO } from "@/lib/contenido";
@@ -119,6 +120,10 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         />
         <Providers>{children}</Providers>
         <RegistrarSW />
+        {/* Analytics de Vercel: mide páginas vistas y los eventos de conversión
+            de src/lib/eventos-conversion.ts. No usa cookies ni identifica
+            personas, así que no necesita banner de consentimiento. */}
+        <Analytics />
       </body>
     </html>
   );

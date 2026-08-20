@@ -2,6 +2,7 @@
 
 import { useRef, useState } from "react";
 import { signIn } from "next-auth/react";
+import { EVENTOS, medir } from "@/lib/eventos-conversion";
 
 /** Validación de email real (antes: `includes("@") && includes(".")`, aceptaba "a@."). */
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -33,6 +34,16 @@ export function useAuthSubmit(mensajes: MensajesAuth) {
   // alcanza como única defensa contra el doble-submit.
   const enVueloRef = useRef(false);
 
+  // form_start se emite UNA vez, la primera vez que la persona escribe algo.
+  // Si se emitiera en cada tecla, el funnel contaría un "empezó el formulario"
+  // por caracter y la tasa de conversión daría cerca de cero.
+  const inicioMedidoRef = useRef(false);
+  const marcarInicio = () => {
+    if (inicioMedidoRef.current) return;
+    inicioMedidoRef.current = true;
+    medir(EVENTOS.FORM_START, { tipo: tab });
+  };
+
   const isSignup = tab === "signup";
 
   const submit = async (destino: string) => {
@@ -63,6 +74,9 @@ export function useAuthSubmit(mensajes: MensajesAuth) {
         setError(isSignup ? mensajes.cuentaCreadaSinLogin : mensajes.login);
         return;
       }
+      // Después de que el servidor confirmó, no al hacer click: un funnel que
+      // cuenta intentos como conversiones miente hacia arriba.
+      medir(EVENTOS.FORM_SUBMIT, { tipo: tab });
       window.location.href = destino;
     } catch {
       setError(mensajes.conexion);
@@ -72,12 +86,15 @@ export function useAuthSubmit(mensajes: MensajesAuth) {
     }
   };
 
+  // Los setters van envueltos para que form_start se mida sin que cada
+  // formulario tenga que acordarse de emitirlo — el mismo criterio que el
+  // middleware: que la instrumentación no dependa de la memoria de nadie.
   return {
     tab, setTab, isSignup,
-    nombre, setNombre,
-    empresa, setEmpresa,
-    email, setEmail,
-    password, setPassword,
+    nombre, setNombre: (v: string) => { marcarInicio(); setNombre(v); },
+    empresa, setEmpresa: (v: string) => { marcarInicio(); setEmpresa(v); },
+    email, setEmail: (v: string) => { marcarInicio(); setEmail(v); },
+    password, setPassword: (v: string) => { marcarInicio(); setPassword(v); },
     error, setError,
     cargando,
     submit,
