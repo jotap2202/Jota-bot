@@ -73,7 +73,8 @@ jobs:
           npm run test:secretos
 
       # Se invoca next build directo en vez de `npm run build`: el script de
-      # jota-agency incluye `prisma db push`, que escribiría el schema contra
-      # la base de la variable DATABASE_URL. En CI eso no debe pasar nunca.
+      # jota-agency incluye `prisma migrate deploy`, que aplicaría migraciones
+      # contra la base de la variable DATABASE_URL. En CI eso no debe pasar
+      # nunca — acá solo se verifica que el proyecto compile.
       - name: Build
         run: npx prisma generate && npx next build

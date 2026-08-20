@@ -8,12 +8,21 @@ Problemas conocidos, sin maquillar. Severidad: Critical / High / Medium / Low.
 
 ## High
 
-### KI-001 — `prisma db push` corre en el build de producción
-El build es `prisma generate && prisma db push && next build`. Cada deploy
-aplica el schema a la base de `DATABASE_URL`, sin migración versionada, sin
-confirmar y sin backup previo. Un cambio que elimine una columna elimina los
-datos.
-**Ticket:** D1-A · **Rollback:** restaurar backup de Neon (point-in-time).
+### KI-013 — ⚠️ Acción requerida: baseline de migraciones antes del próximo deploy
+El build ahora corre `prisma migrate deploy`, pero la base de producción tiene
+las 30 tablas creadas por `db push` y ninguna migración registrada. Prisma la
+ve como base no vacía sin historial y falla con `P3005`. **El próximo deploy a
+producción falla hasta que se corra el baseline** — no pierde datos, pero
+bloquea el deploy. Comando exacto y verificación en `docs/RUNBOOK.md`.
+**Depende de:** acción del dueño, una sola vez.
+
+### ~~KI-001 — `prisma db push` corre en el build de producción~~ · RESUELTO
+El build era `prisma generate && prisma db push && next build`: cada deploy
+aplicaba el schema sin migración versionada, sin confirmar y sin backup.
+**Resuelto en D1-A**: el build usa `prisma migrate deploy` y existe la
+migración `0_init`. Se verificó contra un Postgres real que la base creada por
+`db push` y la creada por la migración son idénticas, y que las 109 pruebas de
+integración pasan contra la base migrada. Queda KI-013 como paso operativo.
 
 ### KI-002 — Un solo entorno: staging y producción comparten base
 No existe entorno de staging separado. Probar contra producción es hoy el
