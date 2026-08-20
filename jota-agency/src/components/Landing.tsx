@@ -243,7 +243,13 @@ export function Landing({
           <div className="wrap stats">
             {t.stats.map((s, i) => (
               <div className="reveal stat" key={`${lang}-${i}`} style={{ animationDelay: `${i * 110}ms` }}>
-                <div className="n grad-text" data-count={s.n} data-suf={s.suf}>0{s.suf}</div>
+                {/* El valor real se renderiza en el servidor, no lo escribe el
+                    contador. Antes acá iba un 0: con prefers-reduced-motion el
+                    contador no corre nunca, así que la página mostraba
+                    "0/7 · 0% · 0 min" de forma permanente — y eso es lo que veía
+                    también Google, que lee el HTML del servidor. El contador
+                    sigue animando desde 0 para quien sí acepta movimiento. */}
+                <div className="n grad-text" data-count={s.n} data-suf={s.suf}>{s.n}{s.suf}</div>
                 <p>{s.label}</p>
               </div>
             ))}
