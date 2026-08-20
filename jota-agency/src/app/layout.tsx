@@ -33,9 +33,9 @@ const mono = IBM_Plex_Mono({
 // así que no hay una versión en castellano que indexar (ni hreflang que
 // declarar apuntando a una URL que no existe).
 const SITIO = SITIO_URL;
-const TITULO = "JOTA agency — B2B client generation";
+const TITULO = "JOTA agency — every inquiry answered, qualified and booked";
 const DESCRIPCION =
-  "We do one thing: get you clients. Qualified meetings on your calendar, every month.";
+  "We install a system that answers everyone who contacts your business at any hour, qualifies them, books the meeting and follows up.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITIO),
@@ -97,7 +97,7 @@ const JSON_LD = {
   description: DESCRIPCION,
   email: EMAIL_CONTACTO,
   availableLanguage: ["en", "es"],
-  serviceType: "B2B client generation",
+  serviceType: "AI lead response and appointment booking",
   // JOTA opera desde Maui y sus clientes están ahí: decírselo a Google es
   // lo que hace que aparezca en búsquedas locales del rubro. Solo se afirma
   // isla, estado y país — sin dirección postal, que no corresponde inventar.

@@ -5,6 +5,36 @@ Las que están `PENDIENTE` bloquean trabajo: necesitan respuesta del dueño.
 
 ---
 
+## D-008 — Se conserva la garantía de reuniones · **revisala vos**
+
+**Fecha:** 2026-08-20 · **Ticket:** D1-D
+
+El master plan (Día 1, Bloque 5, paso 6) dice *"eliminá garantías o resultados
+no demostrados"*. **Me aparté de eso y dejé la garantía en la página**, y
+quiero que lo sepas para que lo decidas vos.
+
+Razonamiento: lo que el plan quiere sacar son claims inventados —métricas,
+testimonios, casos que no existen— y eso ya se hizo. La garantía es distinta:
+*"acordamos un mínimo de reuniones por mes; si no llegamos, el mes siguiente
+trabajamos gratis"* no es un resultado no demostrado, es un compromiso
+condicional que vos podés honrar o no. Y hoy es el elemento de confianza más
+fuerte que tiene la página, justo cuando no hay testimonios ni casos.
+
+**Pero es una decisión de negocio, no técnica**, y tiene consecuencias
+económicas reales si entra un cliente al que no le podés cumplir. Si querés
+sacarla, es borrar el bloque `garantia` de `contenido.ts` y su sección en
+`Landing.tsx`. Decime y lo hago.
+
+**Ojo con una cosa:** la garantía habla de *reuniones por mes*, que es el
+lenguaje del servicio viejo (prospección saliente). El producto central ahora
+es el Revenue Engine, que responde y agenda la demanda que **ya te llega** — no
+genera demanda nueva. Prometer un mínimo de reuniones sobre un volumen de
+consultas que no controlás es un riesgo distinto al de antes. Si la conservás,
+convendría reescribirla en términos de lo que el motor sí controla (tiempo de
+respuesta, cero consultas sin contestar).
+
+---
+
 ## D-006 — Supabase + RLS vs. Neon + Prisma · **PENDIENTE**
 
 **Fecha:** 2026-08-20 · **Bloquea:** Día 1 Bloque 3

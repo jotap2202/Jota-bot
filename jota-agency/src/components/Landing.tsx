@@ -178,9 +178,9 @@ export function Landing({
             <span style={{ fontFamily: "var(--font-display), sans-serif", fontSize: 16, letterSpacing: "-.01em" }}>JOTA agency</span>
           </a>
           <div className="nav-links">
-            <a href="#servicios">{t.nav.servicios}</a>
+            <a href="#sistema">{t.nav.sistema}</a>
             <a href="#proceso">{t.nav.proceso}</a>
-            <a href="#diagnostico">{t.nav.diagnostico}</a>
+            <a href="#faq">{t.nav.faq}</a>
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
             <div className="lang" role="group" aria-label={lang === "es" ? "Idioma" : "Language"}>
@@ -289,7 +289,32 @@ export function Landing({
           </div>
         </section>
 
-        {/* ---------------- SERVICIOS ---------------- */}
+        {/* ---------------- EL SISTEMA (la oferta central) ---------------- */}
+        <section id="sistema" style={{ paddingTop: 96, paddingBottom: 96 }}>
+          <div className="wrap">
+            <div className="reveal"><div className="eyebrow"><span className="l" /><span className="t">{t.sistema.cap}</span></div></div>
+            <div className="reveal"><h2 className="sec-h">{t.sistema.titulo}</h2></div>
+            <div className="reveal"><p style={{ marginTop: 12, fontSize: 14, color: "var(--dim)" }}>{t.sistema.sub}</p></div>
+            <div style={{ marginTop: 48 }}>
+              {t.sistema.piezas.map((p, i) => (
+                <div className="reveal" key={`${lang}-sis-${i}`}>
+                  <div className="serv">
+                    <div className="num">{String(i + 1).padStart(2, "0")}</div>
+                    <div className="name">
+                      <div className="nm">{p.nombre}</div>
+                      <div className="cap">{p.cap}</div>
+                    </div>
+                    <p className="desc">{p.desc}</p>
+                    <div className="arr" aria-hidden>→</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div style={{ borderTop: "1px solid var(--line)" }} />
+          </div>
+        </section>
+
+        {/* ---------------- SERVICIOS (módulos opcionales) ---------------- */}
         <section id="servicios" className="band" style={{ paddingTop: 96, paddingBottom: 96 }}>
           <div className="wrap">
             <div className="reveal"><div className="eyebrow"><span className="l" /><span className="t">{t.serviciosCap}</span></div></div>
@@ -353,6 +378,71 @@ export function Landing({
               <div className="eyebrow center"><span className="l" /><span className="t">{t.garantia.cap}</span></div>
               <p className="q">“{t.garantia.texto}”</p>
               <p className="sig">{t.garantia.firma}</p>
+            </div>
+          </div>
+        </section>
+
+        {/* ---------------- INTEGRACIONES ---------------- */}
+        <section id="integraciones" style={{ paddingTop: 96, paddingBottom: 96 }}>
+          <div className="wrap">
+            <div className="reveal"><div className="eyebrow"><span className="l" /><span className="t">{t.integraciones.cap}</span></div></div>
+            <div className="reveal"><h2 className="sec-h">{t.integraciones.titulo}</h2></div>
+            <div className="reveal"><p style={{ marginTop: 12, fontSize: 14, color: "var(--dim)" }}>{t.integraciones.sub}</p></div>
+            <div className="integra">
+              {t.integraciones.items.map((it, i) => (
+                <div className="reveal" key={`${lang}-int-${i}`} style={{ animationDelay: `${i * 70}ms` }}>
+                  <div className={`intg${it.estado === "pronto" ? " pronto" : ""}`}>
+                    <div className="intg-h">
+                      <span className="nm">{it.nombre}</span>
+                      <span className="tag">{it.estado === "listo" ? (lang === "es" ? "Listo" : "Ready") : (lang === "es" ? "Pronto" : "Soon")}</span>
+                    </div>
+                    <p>{it.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="reveal"><p style={{ marginTop: 24, fontSize: 13, color: "var(--dim)", fontStyle: "italic" }}>{t.integraciones.nota}</p></div>
+          </div>
+        </section>
+
+        {/* ---------------- SEGURIDAD / HANDOFF ---------------- */}
+        <section id="control" className="band" style={{ paddingTop: 96, paddingBottom: 96 }}>
+          <div className="wrap">
+            <div className="reveal"><div className="eyebrow center"><span className="l" /><span className="t">{t.seguridad.cap}</span></div></div>
+            <div className="reveal"><h2 style={{ textAlign: "center", marginTop: 16, fontSize: "clamp(26px,4vw,38px)", letterSpacing: "-.02em" }}>{t.seguridad.titulo}</h2></div>
+            <div className="reveal"><p style={{ textAlign: "center", marginTop: 12, fontSize: 14, color: "var(--dim)" }}>{t.seguridad.sub}</p></div>
+            <div className="steps dos">
+              {t.seguridad.puntos.map((p, i) => (
+                <div className="reveal" key={`${lang}-seg-${i}`} style={{ animationDelay: `${i * 110}ms` }}>
+                  <div className="step">
+                    <div className="st">{p.titulo}</div>
+                    <p>{p.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ---------------- FAQ ---------------- */}
+        <section id="faq" style={{ paddingTop: 96, paddingBottom: 96 }}>
+          <div className="wrap faq-wrap">
+            <div className="reveal"><div className="eyebrow center"><span className="l" /><span className="t">{t.faq.cap}</span></div></div>
+            <div className="reveal"><h2 style={{ textAlign: "center", marginTop: 16, fontSize: "clamp(26px,4vw,38px)", letterSpacing: "-.02em" }}>{t.faq.titulo}</h2></div>
+            <div style={{ marginTop: 48 }}>
+              {/* <details> nativo: accesible con teclado y lector de pantalla sin
+                  una línea de JS, y funciona aunque la hidratación falle. */}
+              {t.faq.items.map((f, i) => (
+                <div className="reveal" key={`${lang}-faq-${i}`}>
+                  <details className="faq-item">
+                    <summary>
+                      <span>{f.p}</span>
+                      <span className="ico" aria-hidden>+</span>
+                    </summary>
+                    <p>{f.r}</p>
+                  </details>
+                </div>
+              ))}
             </div>
           </div>
         </section>

@@ -14,13 +14,35 @@ export const EMAIL_CONTACTO = "jotaagency@jotaagency.org";
 
 export type Contenido = {
   skip: string;
-  nav: { servicios: string; proceso: string; diagnostico: string; cta: string };
+  nav: { sistema: string; proceso: string; faq: string; cta: string };
   hero: { eyebrow: string; lineas: string[]; sub: string; cta1: string; cta2: string };
   marquee: string;
   stats: { n: number; suf: string; label: string }[];
   sectores: { cap: string; titulo: string; items: string[] };
   manif: { cap: string; titulo: string; texto: string; imgCap: string };
   manif2: { cap: string; titulo: string; texto: string; imgCap: string };
+  /** El producto central: el Revenue Engine. Lo que hace el agente, en orden. */
+  sistema: {
+    cap: string;
+    titulo: string;
+    sub: string;
+    piezas: { nombre: string; cap: string; desc: string }[];
+  };
+  /** Dónde se enchufa. Solo lo que funciona hoy; lo que no, dice que no. */
+  integraciones: {
+    cap: string;
+    titulo: string;
+    sub: string;
+    items: { nombre: string; estado: "listo" | "pronto"; desc: string }[];
+    nota: string;
+  };
+  /** Qué pasa cuando la IA no sabe, y qué no puede hacer nunca. */
+  seguridad: {
+    cap: string;
+    titulo: string;
+    sub: string;
+    puntos: { titulo: string; desc: string }[];
+  };
   serviciosCap: string;
   servTitulo: string;
   servSub: string;
@@ -29,6 +51,8 @@ export type Contenido = {
   procSub: string;
   pasos: { titulo: string; desc: string }[];
   garantia: { cap: string; texto: string; firma: string };
+  /** Objeciones antes de pedir la llamada: precio, plazo, riesgo, control. */
+  faq: { cap: string; titulo: string; items: { p: string; r: string }[] };
   diag: {
     eyebrow: string;
     titulo: string;
@@ -77,15 +101,15 @@ export type Contenido = {
 export const T: Record<Idioma, Contenido> = {
   es: {
     skip: "Saltar al contenido",
-    nav: { servicios: "Servicios", proceso: "Método", diagnostico: "Diagnóstico", cta: "Hablar con J" },
+    nav: { sistema: "El sistema", proceso: "Cómo funciona", faq: "Preguntas", cta: "Pedir diagnóstico" },
     hero: {
-      eyebrow: "Agencia de generación de clientes B2B — ES/EN",
-      lineas: ["Convertimos empresas", "desconocidas en", "empresas buscadas."],
-      sub: "Nos dedicamos a una sola cosa: conseguirte clientes. Reuniones calificadas en tu agenda, todos los meses.",
-      cta1: "Diagnóstico gratis con J",
-      cta2: "Ver el método",
+      eyebrow: "JOTA Revenue Engine — ES/EN",
+      lineas: ["Cada consulta", "respondida, calificada", "y agendada."],
+      sub: "Instalamos un sistema que atiende a todos los que te escriben —a cualquier hora—, averigua qué necesitan, los agenda y les hace seguimiento. Vos aparecés en la reunión.",
+      cta1: "Pedir un diagnóstico gratis",
+      cta2: "Ver cómo funciona",
     },
-    marquee: "MÁS CLIENTES — MÁS REUNIONES — MÁS CRECIMIENTO — ",
+    marquee: "CADA CONSULTA RESPONDIDA — CADA LEAD CALIFICADO — CADA REUNIÓN AGENDADA — ",
     stats: [
       { n: 24, suf: "/7", label: "Cada interesado atendido, sin importar la hora" },
       { n: 78, suf: "%", label: "de los compradores le compra a quien responde primero" },
@@ -93,7 +117,7 @@ export const T: Record<Idioma, Contenido> = {
     ],
     sectores: {
       cap: "Confianza",
-      titulo: "Sistemas de captación pensados para tu rubro",
+      titulo: "Pensado para negocios donde una consulta perdida se nota",
       items: ["Estudios contables", "Clínicas y salud", "Inmobiliarias", "Servicios profesionales", "Software / SaaS", "Agencias y estudios"],
     },
     manif: {
@@ -110,28 +134,99 @@ export const T: Record<Idioma, Contenido> = {
         "Nuestro sistema prospecta, contacta y responde las 24 horas. Cuando un cliente potencial escribe a medianoche, lo atendemos. Cuando te googlea, aparecés con la mejor cara. Vos te ocupás de tu negocio; nosotros, de llenarte la agenda.",
       imgCap: "El comprador que llega a las 11 de la noche también es tuyo.",
     },
-    serviciosCap: "Servicios",
-    servTitulo: "Cómo conseguimos clientes",
-    servSub: "Seis piezas. Un solo objetivo: que tu agenda se llene.",
+    sistema: {
+      cap: "El sistema",
+      titulo: "Qué hace, exactamente",
+      sub: "Cuatro cosas, en este orden, para cada persona que te escribe.",
+      piezas: [
+        { nombre: "Responde", cap: "En segundos, a cualquier hora", desc: "Chat en tu web, formularios y email entrante. Contesta con la información de tu negocio que vos cargaste, no con generalidades." },
+        { nombre: "Califica", cap: "Y te dice por qué", desc: "Averigua qué necesitan, dónde están y para cuándo. Cada lead llega con un puntaje y con las razones de ese puntaje escritas." },
+        { nombre: "Agenda", cap: "Sobre tu disponibilidad real", desc: "Ofrece horarios que existen y confirma la reunión. Nunca confirma algo que no se reservó." },
+        { nombre: "Hace seguimiento", cap: "Hasta que responden o piden parar", desc: "Si alguien no contesta, insiste con criterio. Se corta solo cuando responden, agendan o piden que no los contacten más." },
+      ],
+    },
+    integraciones: {
+      cap: "Dónde se enchufa",
+      titulo: "Se instala en lo que ya tenés",
+      sub: "Sin cambiar tu web, sin migrar nada.",
+      items: [
+        { nombre: "Tu sitio web", estado: "listo", desc: "Una línea de código. Funciona en WordPress, Wix, Squarespace, Shopify o lo que uses." },
+        { nombre: "Tus formularios", estado: "listo", desc: "Las consultas que ya recibís entran al mismo sistema." },
+        { nombre: "Email", estado: "listo", desc: "Lee tu casilla de consultas y responde manteniendo el hilo." },
+        { nombre: "Avisos a tu equipo", estado: "listo", desc: "Cuando entra un lead bueno, le llega a la persona que corresponde." },
+        { nombre: "Google Calendar", estado: "pronto", desc: "Hoy la agenda sale de los horarios que cargaste. La sincronización con tu calendario está en camino." },
+        { nombre: "Tu CRM", estado: "pronto", desc: "Salida por webhook para conectar el CRM que uses." },
+      ],
+      nota: "Si algo dice «pronto», es que todavía no está. No lo vendemos como hecho.",
+    },
+    seguridad: {
+      cap: "Control",
+      titulo: "Qué pasa cuando no sabe",
+      sub: "Un agente que inventa es peor que no tener agente.",
+      puntos: [
+        { titulo: "Si no sabe, lo dice y te lo pasa", desc: "Solo afirma lo que está cargado en tu base de conocimiento. Cualquier otra cosa la deriva a una persona de tu equipo, con el contexto completo de la conversación." },
+        { titulo: "Nunca inventa precios ni disponibilidad", desc: "Si no cargaste precios, tiene prohibido hablar de precios. No estima, no aproxima, no negocia descuentos." },
+        { titulo: "Vos podés tomar el control cuando quieras", desc: "Desde el panel ves cada conversación en vivo, podés responder vos, pausar la IA en ese hilo o derivarla a alguien del equipo." },
+        { titulo: "Los datos de cada negocio están separados", desc: "Cada cliente tiene sus datos aislados, y las credenciales que cargues se guardan cifradas. Nadie ve lo de nadie." },
+      ],
+    },
+    serviciosCap: "Además",
+    servTitulo: "Y si querés más demanda entrando",
+    servSub: "Módulos que se suman al motor. Opcionales, se contratan aparte.",
     servicios: [
       { nombre: "Prospección B2B", cap: "Reuniones calificadas", desc: "Buscamos, contactamos y calificamos potenciales clientes uno por uno. Tu equipo solo se sienta con alguien que ya quiere escucharte." },
       { nombre: "LinkedIn del fundador", cap: "Autoridad que atrae", desc: "Convertimos el perfil del dueño en un imán de clientes: contenido y conversaciones que hacen que te escriban a vos." },
       { nombre: "Email en frío", cap: "Puertas que se abren", desc: "Campañas hacia empresas que hoy no saben que existís, con seguimiento automático hasta conseguir la respuesta." },
-      { nombre: "Agente IA 24/7", cap: "Cero consultas perdidas", desc: "Ningún interesado se queda sin respuesta, ni a las 3 de la mañana. Atiende, califica y captura cada lead." },
       { nombre: "Reseñas y reputación", cap: "Confianza al instante", desc: "Cuando te googlean, encuentran una empresa impecable: más reseñas, mejores respuestas, cero descuido." },
       { nombre: "Publicidad paga", cap: "Alcance medible", desc: "Campañas donde cada peso invertido se traduce en consultas de gente que busca lo que vendés." },
     ],
-    procTitulo: "El método",
-    procSub: "Tres pasos. Vos solo aparecés en el último.",
+    procTitulo: "Cómo funciona",
+    procSub: "Cinco pasos. Vos trabajás en el primero y en el cuarto.",
     pasos: [
-      { titulo: "Diagnóstico", desc: "Contanos tu negocio (podés empezar ahora con J). Definimos juntos tu cliente ideal." },
-      { titulo: "Sistema en marcha", desc: "En la primera semana armamos prospección, mensajes y automatización. Empezamos a contactar." },
-      { titulo: "Reuniones en tu agenda", desc: "Recibís reuniones calificadas y un reporte semanal claro. Escalamos lo que funciona." },
+      { titulo: "Diagnóstico", desc: "Revisamos por dónde se te escapan consultas hoy: horarios sin cubrir, formularios sin responder, llamadas perdidas. Te decimos qué encontramos, sin compromiso." },
+      { titulo: "Instalación", desc: "Cargamos tus servicios, zonas, horarios, políticas y preguntas frecuentes. El agente solo puede afirmar lo que quede cargado acá." },
+      { titulo: "Pruebas", desc: "Corremos casos reales de tu negocio antes de que hable con nadie. Arrancá en modo supervisado: vos aprobás cada respuesta hasta que te convenza." },
+      { titulo: "Salida en vivo", desc: "Recién cuando lo aprobás, empieza a atender. Nunca se activa solo." },
+      { titulo: "Optimización", desc: "Reporte semanal con lo que entró, lo que se agendó y las preguntas que no supo responder. Con eso se ajusta el conocimiento." },
     ],
     garantia: {
       cap: "Nuestra garantía",
       texto: "Acordamos un mínimo de reuniones por mes. Si no llegamos, el mes siguiente trabajamos gratis.",
       firma: "Así de seguros estamos del método.",
+    },
+    faq: {
+      cap: "Antes de que preguntes",
+      titulo: "Lo que todos quieren saber",
+      items: [
+        {
+          p: "¿Cuánto sale?",
+          r: "Depende del volumen de consultas que recibas y de cuántos canales conectes, así que no tiene sentido tirarte un número acá. Lo definimos en el diagnóstico, que es gratis y no te compromete a nada. Lo que sí te podemos decir de entrada: hay un costo de instalación y una mensualidad, sin porcentaje sobre tus ventas.",
+        },
+        {
+          p: "¿Cuánto tarda en estar funcionando?",
+          r: "Días, no meses. La parte que depende de nosotros es rápida. La que manda el reloj es la tuya: necesitamos tus servicios, zonas, horarios, políticas y unas diez preguntas frecuentes con sus respuestas reales. Si eso lo tenés a mano, se instala y se prueba en la misma semana.",
+        },
+        {
+          p: "¿Y si la IA no sabe algo o dice una barbaridad?",
+          r: "Solo puede afirmar lo que está cargado en tu base de conocimiento. Si le preguntan algo que no está, lo dice y deriva a una persona de tu equipo con toda la conversación. Y arranca en modo supervisado: vos aprobás cada respuesta hasta que te convenza. No se activa solo nunca.",
+        },
+        {
+          p: "¿Reemplaza a mi equipo?",
+          r: "No. Se ocupa del primer contacto y de lo repetitivo —responder a las 3 de la mañana, preguntar lo mismo de siempre, insistirle a quien no contestó— para que tu equipo hable con gente que ya está interesada. Cuando alguien pide hablar con una persona, se la pasa.",
+        },
+        {
+          p: "¿Necesito cambiar mi web o mi CRM?",
+          r: "No. Es una línea de código en tu sitio, funcione con lo que funcione. Tus formularios y tu casilla de consultas entran al mismo sistema sin tocarlos.",
+        },
+        {
+          p: "¿Qué pasa con los datos de mis clientes?",
+          r: "Los datos de cada negocio están aislados de los de los demás, y cualquier credencial que cargues se guarda cifrada. Podés pedir que borremos los datos de una persona cuando lo necesites.",
+        },
+        {
+          p: "¿Y si no funciona?",
+          r: "La base de conocimiento que armamos es tuya y te la llevás. Las condiciones de permanencia y de baja las dejamos por escrito antes de arrancar, en el mismo documento donde va el alcance: nada de eso queda a interpretación.",
+        },
+      ],
     },
     diag: {
       eyebrow: "Diagnóstico en vivo",
@@ -171,13 +266,13 @@ export const T: Record<Idioma, Contenido> = {
       empError: "Escribí el nombre de tu empresa.",
     },
     cierre: {
-      lineas: ["¿Listo para que", "te busquen a vos?"],
-      sub: "Una llamada de 15 minutos alcanza para saber si podemos ayudarte. Sin compromiso.",
-      cta: "Agendar llamada de 15 min",
+      lineas: ["¿Cuántas consultas", "se te escaparon este mes?"],
+      sub: "En quince minutos te decimos por dónde se está yendo la demanda que ya tenés. Sin compromiso.",
+      cta: "Pedir el diagnóstico",
       nota: "Respondemos en el día, en español o inglés.",
       oEscribinos: "o escribinos a",
     },
-    footer: "Generación de clientes B2B · Español / English",
+    footer: "JOTA Revenue Engine · Español / English",
     salir: "Salir",
     asuntoMail: "Consulta desde la web de JOTA agency",
     a11y: {
@@ -189,15 +284,15 @@ export const T: Record<Idioma, Contenido> = {
   },
   en: {
     skip: "Skip to content",
-    nav: { servicios: "Services", proceso: "Method", diagnostico: "Diagnosis", cta: "Talk to J" },
+    nav: { sistema: "The system", proceso: "How it works", faq: "FAQ", cta: "Get a diagnosis" },
     hero: {
-      eyebrow: "B2B client generation agency — ES/EN",
-      lineas: ["We turn unknown", "companies into", "sought-after companies."],
-      sub: "We do one thing: get you clients. Qualified meetings on your calendar, every month.",
-      cta1: "Free diagnosis with J",
-      cta2: "See the method",
+      eyebrow: "JOTA Revenue Engine — ES/EN",
+      lineas: ["Every inquiry", "answered, qualified", "and booked."],
+      sub: "We install a system that answers everyone who contacts you — at any hour — finds out what they need, books them and follows up. You show up for the meeting.",
+      cta1: "Get a free diagnosis",
+      cta2: "See how it works",
     },
-    marquee: "MORE CLIENTS — MORE MEETINGS — MORE GROWTH — ",
+    marquee: "EVERY INQUIRY ANSWERED — EVERY LEAD QUALIFIED — EVERY MEETING BOOKED — ",
     stats: [
       { n: 24, suf: "/7", label: "Every lead answered, no matter the hour" },
       { n: 78, suf: "%", label: "of buyers buy from whoever responds first" },
@@ -205,7 +300,7 @@ export const T: Record<Idioma, Contenido> = {
     ],
     sectores: {
       cap: "Trusted",
-      titulo: "Client-generation systems built for your industry",
+      titulo: "Built for businesses where one lost inquiry hurts",
       items: ["Accounting firms", "Clinics & health", "Real estate", "Professional services", "Software / SaaS", "Agencies & studios"],
     },
     manif: {
@@ -222,28 +317,99 @@ export const T: Record<Idioma, Contenido> = {
         "Our system prospects, contacts and replies around the clock. When a potential client writes at midnight, we answer. When they google you, you show up at your best. You run your business; we fill your calendar.",
       imgCap: "The buyer who arrives at 11pm is yours too.",
     },
-    serviciosCap: "Services",
-    servTitulo: "How we get you clients",
-    servSub: "Six pieces. One goal: a full calendar.",
+    sistema: {
+      cap: "The system",
+      titulo: "What it actually does",
+      sub: "Four things, in this order, for everyone who contacts you.",
+      piezas: [
+        { nombre: "Answers", cap: "In seconds, at any hour", desc: "Chat on your site, forms and inbound email. It replies with your business information — the one you loaded — not with generalities." },
+        { nombre: "Qualifies", cap: "And tells you why", desc: "It finds out what they need, where they are and by when. Every lead arrives with a score and the reasons for that score written out." },
+        { nombre: "Books", cap: "Against real availability", desc: "It offers slots that exist and confirms the meeting. It never confirms something that wasn't booked." },
+        { nombre: "Follows up", cap: "Until they reply or opt out", desc: "If someone goes quiet, it follows up with judgment. It stops on its own when they reply, book, or ask not to be contacted again." },
+      ],
+    },
+    integraciones: {
+      cap: "Where it plugs in",
+      titulo: "It installs into what you already have",
+      sub: "No rebuild, no migration.",
+      items: [
+        { nombre: "Your website", estado: "listo", desc: "One line of code. Works on WordPress, Wix, Squarespace, Shopify or whatever you use." },
+        { nombre: "Your forms", estado: "listo", desc: "The inquiries you already receive enter the same system." },
+        { nombre: "Email", estado: "listo", desc: "It reads your inquiries inbox and replies keeping the thread." },
+        { nombre: "Alerts to your team", estado: "listo", desc: "When a good lead comes in, it reaches the right person." },
+        { nombre: "Google Calendar", estado: "pronto", desc: "Today availability comes from the hours you loaded. Syncing with your calendar is on the way." },
+        { nombre: "Your CRM", estado: "pronto", desc: "Outbound webhook to connect whichever CRM you use." },
+      ],
+      nota: "If something says \"soon\", it isn't there yet. We don't sell it as done.",
+    },
+    seguridad: {
+      cap: "Control",
+      titulo: "What happens when it doesn't know",
+      sub: "An agent that makes things up is worse than no agent.",
+      puntos: [
+        { titulo: "If it doesn't know, it says so and hands off", desc: "It can only state what's in your knowledge base. Anything else goes to a person on your team, with the full conversation attached." },
+        { titulo: "It never invents prices or availability", desc: "If you didn't load prices, it is forbidden from discussing prices. It doesn't estimate, approximate or negotiate discounts." },
+        { titulo: "You can take over whenever you want", desc: "From the dashboard you see every conversation live, you can reply yourself, pause the AI on that thread, or hand it to someone on your team." },
+        { titulo: "Each business's data is separated", desc: "Every client's data is isolated from the others, and any credentials you load are stored encrypted. Nobody sees anyone else's." },
+      ],
+    },
+    serviciosCap: "Also",
+    servTitulo: "And if you want more demand coming in",
+    servSub: "Modules that sit on top of the engine. Optional, contracted separately.",
     servicios: [
       { nombre: "B2B Prospecting", cap: "Qualified meetings", desc: "We find, contact and qualify potential clients one by one. Your team just sits down with someone who already wants to listen." },
       { nombre: "Founder's LinkedIn", cap: "Authority that attracts", desc: "We turn the owner's profile into a client magnet: content and conversations that make prospects write to you." },
       { nombre: "Cold email", cap: "Doors that open", desc: "Campaigns to companies that don't know you exist yet, with automatic follow-up until we get the reply." },
-      { nombre: "24/7 AI agent", cap: "Zero lost inquiries", desc: "No lead goes unanswered, not even at 3am. It replies, qualifies and captures every lead." },
       { nombre: "Reviews & reputation", cap: "Instant trust", desc: "When they google you, they find an impeccable company: more reviews, better replies, zero neglect." },
       { nombre: "Paid ads", cap: "Measurable reach", desc: "Campaigns where every dollar invested turns into inquiries from people looking for what you sell." },
     ],
-    procTitulo: "The method",
-    procSub: "Three steps. You only show up for the last one.",
+    procTitulo: "How it works",
+    procSub: "Five steps. You work on the first and the fourth.",
     pasos: [
-      { titulo: "Diagnosis", desc: "Tell us about your business (start now with J). Together we define your ideal client." },
-      { titulo: "System up and running", desc: "In the first week we build prospecting, messaging and automation. Outreach begins." },
-      { titulo: "Meetings on your calendar", desc: "You get qualified meetings and a clear weekly report. We scale what works." },
+      { titulo: "Audit", desc: "We look at where inquiries are leaking today: uncovered hours, unanswered forms, missed calls. We tell you what we found, no strings attached." },
+      { titulo: "Install", desc: "We load your services, areas, hours, policies and FAQs. The agent can only state what ends up loaded here." },
+      { titulo: "Test", desc: "We run real cases from your business before it talks to anyone. Start in supervised mode: you approve every reply until you're convinced." },
+      { titulo: "Go live", desc: "Only once you approve does it start answering. It never activates on its own." },
+      { titulo: "Optimize", desc: "Weekly report with what came in, what got booked, and the questions it couldn't answer. That's what tunes the knowledge base." },
     ],
     garantia: {
       cap: "Our guarantee",
       texto: "We agree on a minimum number of meetings per month. If we don't hit it, next month we work for free.",
       firma: "That's how confident we are in the method.",
+    },
+    faq: {
+      cap: "Before you ask",
+      titulo: "What everyone wants to know",
+      items: [
+        {
+          p: "What does it cost?",
+          r: "It depends on your inquiry volume and how many channels you connect, so throwing a number at you here would be meaningless. We define it in the diagnosis, which is free and commits you to nothing. What we can tell you upfront: there's a setup cost and a monthly fee, with no percentage of your sales.",
+        },
+        {
+          p: "How long until it's running?",
+          r: "Days, not months. Our part is fast. The clock is set by yours: we need your services, areas, hours, policies and about ten FAQs with their real answers. If you have that on hand, it gets installed and tested within the same week.",
+        },
+        {
+          p: "What if the AI doesn't know something, or says something wrong?",
+          r: "It can only state what's in your knowledge base. If it's asked something that isn't there, it says so and hands off to a person on your team with the whole conversation. And it starts in supervised mode: you approve every reply until you're convinced. It never activates on its own.",
+        },
+        {
+          p: "Does it replace my team?",
+          r: "No. It handles first contact and the repetitive part — answering at 3am, asking the same questions every time, chasing people who didn't reply — so your team talks to people who are already interested. When someone asks for a human, they get one.",
+        },
+        {
+          p: "Do I need to change my website or my CRM?",
+          r: "No. It's one line of code on your site, whatever it's built with. Your forms and your inquiries inbox feed into the same system without touching them.",
+        },
+        {
+          p: "What happens to my clients' data?",
+          r: "Each business's data is isolated from every other, and any credentials you load are stored encrypted. You can ask us to delete a person's data whenever you need to.",
+        },
+        {
+          p: "What if it doesn't work?",
+          r: "The knowledge base we build is yours and you take it with you. Terms for commitment and cancellation are put in writing before we start, in the same document as the scope: none of that is left to interpretation.",
+        },
+      ],
     },
     diag: {
       eyebrow: "Live diagnosis",
@@ -283,13 +449,13 @@ export const T: Record<Idioma, Contenido> = {
       empError: "Please enter your company's name.",
     },
     cierre: {
-      lineas: ["Ready to be the one", "they look for?"],
-      sub: "A 15-minute call is enough to know if we can help. No commitment.",
-      cta: "Book a 15-min call",
+      lineas: ["How many inquiries", "slipped away this month?"],
+      sub: "In fifteen minutes we'll show you where the demand you already have is leaking. No commitment.",
+      cta: "Get the diagnosis",
       nota: "We reply the same day, in Spanish or English.",
       oEscribinos: "or write to us at",
     },
-    footer: "B2B client generation · Español / English",
+    footer: "JOTA Revenue Engine · Español / English",
     salir: "Sign out",
     asuntoMail: "Enquiry from the JOTA agency website",
     a11y: {

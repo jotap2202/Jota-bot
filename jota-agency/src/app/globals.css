@@ -277,3 +277,48 @@ textarea.jfield { resize: vertical; min-height: 104px; }
 .demo-note { font-family: var(--font-mono), monospace; font-size: 11px; color: var(--dim); margin-top: 14px;
   border-top: 1px solid var(--lineSoft); padding-top: 12px; line-height: 1.6; }
 @media (prefers-reduced-motion: reduce) { .caret { animation: none; } }
+
+/* ---------------------------------------------------------------------------
+   Secciones agregadas en el reposicionamiento a Revenue Engine (D1-D):
+   integraciones, control/handoff y FAQ. Reusan las variables de marca y los
+   patrones que ya existen (.step, .eyebrow), no traen un sistema nuevo.
+--------------------------------------------------------------------------- */
+
+/* Variante de 2 columnas para bloques de 4 tarjetas: con la grilla de 3 por
+   defecto quedaba una sola tarjeta huérfana en la segunda fila. */
+@media (min-width: 768px) { .steps.dos { grid-template-columns: repeat(2,1fr); } }
+.steps.dos .step p { max-width: none; }
+
+/* --- Integraciones --- */
+.integra { display: grid; gap: 16px; margin-top: 48px; }
+@media (min-width: 640px) { .integra { grid-template-columns: repeat(2,1fr); } }
+@media (min-width: 960px) { .integra { grid-template-columns: repeat(3,1fr); } }
+.intg { height: 100%; border-radius: 18px; padding: 22px; background: var(--panel); border: 1px solid var(--line); }
+.intg-h { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.intg .nm { font-family: var(--font-display), sans-serif; font-size: 17px; letter-spacing: -.01em; }
+.intg p { margin-top: 10px; font-size: 13.5px; color: var(--dim); line-height: 1.65; }
+.intg .tag { flex: none; font-family: var(--font-mono), monospace; font-size: 9.5px; letter-spacing: .16em;
+  text-transform: uppercase; padding: 4px 9px; border-radius: 999px;
+  color: var(--gold); border: 1px solid var(--gold); background: var(--goldSoft); }
+/* Lo que todavía no existe se ve distinto a propósito: si "pronto" se viera
+   igual que "listo", la página estaría vendiendo algo que no está hecho. */
+.intg.pronto { border-style: dashed; }
+.intg.pronto .tag { color: var(--dim); border-color: var(--line); background: transparent; }
+
+/* --- FAQ --- */
+.faq-wrap { max-width: 760px; }
+.faq-item { border-bottom: 1px solid var(--line); }
+.faq-item summary { display: flex; align-items: center; justify-content: space-between; gap: 20px;
+  padding: 22px 4px; cursor: pointer; list-style: none;
+  font-family: var(--font-display), sans-serif; font-size: clamp(16px,2.2vw,19px); letter-spacing: -.01em;
+  transition: color .2s; }
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary:hover { color: var(--gold); }
+/* El foco tiene que verse: el <details> se opera con teclado. */
+.faq-item summary:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; border-radius: 6px; }
+.faq-item .ico { flex: none; font-family: var(--font-mono), monospace; font-size: 20px; color: var(--gold);
+  transition: transform .2s; }
+.faq-item[open] .ico { transform: rotate(45deg); }
+.faq-item[open] summary { color: var(--gold); }
+.faq-item p { padding: 0 4px 24px; margin: 0; font-size: 14.5px; color: var(--dim); line-height: 1.75; max-width: 62ch; }
+@media (prefers-reduced-motion: reduce) { .faq-item .ico { transition: none; } }
