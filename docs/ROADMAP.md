@@ -33,12 +33,12 @@ la oferta correcta.
 - [x] **D1-0** Backup: tag `pre-platform-backup` ✅ *(local; el push falla — KI-008)*
 - [x] **D1-1** Auditoría sin editar (PROMPT D1.1) ✅ `docs/AUDITORIA-D1.md`
 - [x] **D1-2** Documentos de control ✅ ROADMAP / DECISIONS / KNOWN_ISSUES
-- [ ] **D1-A** Migraciones versionadas — sacar `prisma db push` del build → `prisma migrate deploy` · **High** · 60-90 min
+- [x] **D1-A** Migraciones versionadas — sacar `prisma db push` del build → `prisma migrate deploy` · **High** · 60-90 min
 - [ ] **D1-B** Staging separado con base propia · **High** · 45-60 min
-- [ ] **D1-F** `middleware.ts` que cierre por defecto las rutas privadas · 30 min
-- [ ] **D1-C** `sitemap.ts` + verificar `noindex` · 30 min
-- [ ] **D1-D** Reposicionar landing: Revenue Engine + how it works + FAQ · 90 min
-- [ ] **D1-E** Instrumentar eventos de conversión · 45 min
+- [x] **D1-F** `middleware.ts` que cierre por defecto las rutas privadas · 30 min
+- [x] **D1-C** `sitemap.ts` + verificar `noindex` · 30 min
+- [x] **D1-D** Reposicionar landing: Revenue Engine + how it works + FAQ · 90 min
+- [x] **D1-E** Instrumentar eventos de conversión · 45 min
 
 **Gate:** staging desplegado y separado de producción · un deploy no puede
 perder datos · landing vende la oferta clara · rutas privadas cierran por
