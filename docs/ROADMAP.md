@@ -56,9 +56,9 @@ respondiendo de verdad, con la suite de evaluación que exige el plan.
 
 - [ ] **D2-A** Verificar el dominio en Resend y confirmar envío real *(requiere acción del dueño — KI-003)*
 - [ ] **D2-B** Cargar el **primer negocio real** con el flujo de `NUEVO-CLIENTE.md`, sin tocar código
-- [ ] **D2-C** Suite de evaluación: 40+ casos con expected outcome, clasificados Critical/High/Medium/Low
+- [x] **D2-C** Suite de evaluación: 40+ casos con expected outcome, clasificados Critical/High/Medium/Low
 - [ ] **D2-D** Corregir todo Critical/High de alucinación, fuga entre tenants, consejo inseguro, PII o captura de lead rota
-- [ ] **D2-E** Probar el widget en una página HTML externa, en celular
+- [x] **D2-E** Probar el widget en una página HTML externa, en celular
 - [ ] **D2-F** Mapear los estados de `Lead` al pipeline New → Contacted → Qualified → Booked → Won → Lost
 - [ ] **D2-G** Separar datos DEMO de producción de forma visible en el panel
 
