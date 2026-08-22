@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Valley Isle Plumbing &amp; Air — Maui</title>
+<style>
+  /* CSS hostil a propósito: es lo que se encuentra en el sitio real de un
+     cliente. Si el widget no está aislado, esto lo rompe. */
+  * { box-sizing: content-box; }
+  button, input, textarea { font-family: "Comic Sans MS", cursive; font-size: 22px;
+    background: #ff00ff !important; color: #00ff00; border: 6px dotted red; border-radius: 0; padding: 30px; }
+  div { line-height: 3.4; }
+  body { margin: 0; font-family: Georgia, serif; color: #222; background: #f4f1ea; }
+  header { background: #1c3f5f; color: #fff; padding: 28px 20px; }
+  .wrap { max-width: 780px; margin: 0 auto; padding: 28px 20px 120px; }
+  h1 { margin: 0; font-size: 26px; line-height: 1.2; }
+  h2 { font-size: 20px; margin-top: 32px; }
+  p { line-height: 1.6; }
+  .aviso { background: #fff6d6; border-left: 5px solid #e0a800; padding: 14px 18px; font-size: 14px; }
+</style>
+</head>
+<body>
+  <header>
+    <h1>Valley Isle Plumbing &amp; Air</h1>
+    <p style="margin:6px 0 0;font-size:14px;opacity:.85">Serving Kahului, Wailuku &amp; Kihei</p>
+  </header>
+  <div class="wrap">
+    <p class="aviso">
+      Página de prueba. Simula el sitio de un cliente para verificar que el widget
+      funciona desde OTRO origen, con CSS hostil, y sin romper la página.
+    </p>
+
+    <h2>Our services</h2>
+    <p>Water heater repair and replacement. Drain cleaning. Leak detection.
+       Emergency plumbing, around the clock.</p>
+
+    <h2>Hours</h2>
+    <p>Monday to Friday, 7am to 4pm. Emergency dispatch 24/7.</p>
+
+    <h2>Contact</h2>
+    <p>Call us, or use the chat in the corner.</p>
+
+    <button id="boton-propio">Botón del sitio del cliente</button>
+  </div>
+
+  <!-- La única línea que el cliente pega en su sitio. -->
+  <script src="__JOTA__/api/agente/widget?clave=CLAVE_PUBLICA" async></script>
+</body>
+</html>

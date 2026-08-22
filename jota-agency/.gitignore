@@ -11,3 +11,6 @@ npm-debug.log*
 /prisma/*.db-journal
 *.tsbuildinfo
 next-env.d.ts
+
+# Capturas de las pruebas de navegador
+/pruebas/capturas/
