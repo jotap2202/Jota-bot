@@ -8,13 +8,15 @@ Problemas conocidos, sin maquillar. Severidad: Critical / High / Medium / Low.
 
 ## High
 
-### KI-013 — ⚠️ Acción requerida: baseline de migraciones antes del próximo deploy
-El build ahora corre `prisma migrate deploy`, pero la base de producción tiene
-las 30 tablas creadas por `db push` y ninguna migración registrada. Prisma la
-ve como base no vacía sin historial y falla con `P3005`. **El próximo deploy a
-producción falla hasta que se corra el baseline** — no pierde datos, pero
-bloquea el deploy. Comando exacto y verificación en `docs/RUNBOOK.md`.
-**Depende de:** acción del dueño, una sola vez.
+### ~~KI-013 — Acción requerida: baseline de migraciones~~ · RESUELTO
+El build requería que alguien corriera `prisma migrate resolve --applied
+0_init` a mano contra producción antes del próximo deploy, o el deploy fallaba
+con `P3005`. **Resuelto:** `prisma/desplegar.mjs` lo detecta y lo hace solo,
+pero solo después de verificar que el esquema real de la base coincide
+exactamente con el del repositorio. Si no coincide, se niega y rompe el deploy
+con las diferencias impresas. Los cuatro caminos —base vacía, ya migrada, de
+`db push`, y con drift— están probados contra un PostgreSQL 16 real.
+**Ya no requiere ninguna acción del dueño.**
 
 ### ~~KI-001 — `prisma db push` corre en el build de producción~~ · RESUELTO
 El build era `prisma generate && prisma db push && next build`: cada deploy

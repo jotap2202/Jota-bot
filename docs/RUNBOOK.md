@@ -5,71 +5,75 @@ revierte.
 
 ---
 
-## ⚠️ ACCIÓN REQUERIDA ANTES DEL PRÓXIMO DEPLOY — baseline de migraciones
+## Migraciones en el deploy — no hay que hacer nada a mano
 
-**Si no hacés esto, el próximo deploy a producción falla.** No pierde datos: la
-migración se niega a correr y el deploy queda en rojo. Pero hay que hacerlo una
-sola vez, y hay que hacerlo antes.
+**No requiere ninguna acción tuya.** El deploy se encarga solo. Esta sección
+explica qué hace y cuándo puede detenerse a propósito.
 
-### Por qué
+### Qué cambió y por qué
 
-Hasta ahora el build corría `prisma db push`: cada deploy aplicaba el schema
-directo contra la base, sin migración versionada, sin confirmar y sin backup.
-Un cambio que borrara una columna borraba los datos, en silencio y en
-producción.
+El build corría `prisma db push`: cada deploy aplicaba el schema directo contra
+la base, sin migración versionada, sin confirmar y sin backup. Un cambio que
+borrara una columna borraba los datos, en silencio y en producción.
 
-Ahora el build corre `prisma migrate deploy`. La base de producción ya tiene
-las 30 tablas creadas por `db push`, así que Prisma la ve como "una base con
-cosas adentro y ninguna migración registrada" y se planta (error `P3005`). Hay
-que decirle, una vez, que la migración inicial ya está aplicada.
+Ahora el build corre `node prisma/desplegar.mjs`, que aplica las migraciones
+versionadas y resuelve solo el único caso que necesitaba intervención humana.
 
-### El comando
+### El caso del baseline
 
-Desde tu máquina, con la `DATABASE_URL` **de producción**:
+La base de producción se construyó con `db push`: tiene las 30 tablas pero
+ninguna fila en `_prisma_migrations`. Prisma ve una base con cosas adentro y
+sin historial, y se planta con `P3005`.
+
+Antes eso obligaba a correr `prisma migrate resolve --applied 0_init` a mano.
+Ahora el script lo detecta y lo hace, **pero no a ciegas**: primero compara el
+esquema real de la base contra el del repositorio, y solo registra la migración
+si son idénticos.
+
+Esto no es el `db push` de antes con otro nombre. Aquel era peligroso porque
+**modificaba el esquema** sin preguntar. Este, en el camino del baseline, lo
+único que escribe es una fila en `_prisma_migrations`. Es imposible que pierda
+un dato.
+
+### Los cuatro caminos, todos probados contra un PostgreSQL 16 real
+
+| Situación | Qué hace | Verificado |
+|---|---|---|
+| Base vacía (staging el primer día) | Crea las 30 tablas desde `0_init` | ✅ |
+| Base ya migrada | `No pending migrations to apply` | ✅ |
+| Base de `db push` sin historial (**producción hoy**) | Verifica, baseliniza, deploya | ✅ |
+| Base que **no coincide** con el repo | **Se niega y rompe el deploy** (exit 1) | ✅ |
+
+### Si el deploy se detiene por drift
+
+Vas a ver `La base de producción NO coincide con el esquema del repositorio`,
+seguido de las diferencias exactas. **Eso es el script funcionando bien**, no
+fallando: significa que la base tiene algo que el código no refleja.
+Baselinizar igual dejaría esa diferencia enterrada y la próxima migración se
+escribiría sobre una realidad equivocada.
+
+Cuando pase, mirá las diferencias que imprime y decidí: o el repo tiene que
+reflejar ese cambio, o hay que revertirlo en la base.
+
+### Correrlo a mano (opcional)
 
 ```bash
 cd jota-agency
-DATABASE_URL="<la de produccion>" npx prisma migrate resolve --applied 0_init
+DATABASE_URL="<la que sea>" npm run db:desplegar
 ```
-
-No toca ni una tabla: solo escribe una fila en `_prisma_migrations` diciendo
-que `0_init` ya está aplicada.
-
-### Verificar que quedó bien
-
-```bash
-DATABASE_URL="<la de produccion>" npx prisma migrate status
-```
-
-Tiene que decir `Database schema is up to date!`.
-
-Y para confirmar que el schema real coincide con el del repo:
-
-```bash
-DATABASE_URL="<la de produccion>" npx prisma migrate diff \
-  --from-url "$DATABASE_URL" --to-schema-datamodel prisma/schema.prisma --exit-code
-```
-
-`No difference detected.` es lo que tiene que salir. Si sale una diferencia,
-**no deployees** — avisá antes, porque significa que la base de producción tiene
-algo que el schema del repo no refleja.
-
-### Lo mismo para staging
-
-La base de staging arranca vacía, así que no necesita baseline: el primer
-`prisma migrate deploy` crea las 30 tablas desde `0_init` y listo.
 
 ### Rollback
 
-Si algo sale mal y querés volver al comportamiento anterior:
+Si hiciera falta volver atrás:
 
 ```bash
 # en jota-agency/package.json
-"build": "prisma generate && prisma db push && next build"
+"build": "prisma generate && prisma migrate deploy && next build"
 ```
 
-Volvés al riesgo de antes, pero deployea. Neon tiene restauración
-point-in-time si hiciera falta recuperar datos.
+Eso deja el comportamiento estándar de Prisma, sin el baseline automático — y
+el deploy fallaría con P3005 hasta correr `migrate resolve` a mano. Neon tiene
+restauración point-in-time si hiciera falta recuperar datos.
 
 ---
 
@@ -82,7 +86,7 @@ No se dio por buena porque el archivo se generó. Se probó, contra un Postgres
 |---|---|
 | `prisma migrate deploy` sobre una base vacía | Aplica `0_init` sin errores |
 | Drift entre la base migrada y `schema.prisma` | `No difference detected.` |
-| Base hecha con `db push` vs. base hecha con la migración | `No difference detected.` — **por eso el baseline de producción es seguro** |
+| Base hecha con `db push` vs. base hecha con la migración | `No difference detected.` — **por eso el baseline automático es seguro** |
 | `npm run test:agente-db` contra la base migrada | 109/109 |
 
 La tercera fila es la importante: prueba que la migración reproduce exactamente
