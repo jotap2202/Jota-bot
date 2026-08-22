@@ -35,6 +35,16 @@
 
 .l2 *, .l2 *::before, .l2 *::after { box-sizing: border-box; }
 
+/* globals.css tiene `h1, h2, h3 { font-family: var(--font-display) }`, un
+   selector de elemento que le gana a la familia heredada de `.l2`. Sin esta
+   regla los títulos salían en Space Grotesk —la display de la Landing 1— y la
+   decisión tipográfica de esta versión no se aplicaba a nada de lo que más se
+   ve. Hace falta un selector con clase para ganarle. */
+.l2 h1, .l2 h2, .l2 h3, .l2 h4 {
+  font-family: var(--font-body), system-ui, sans-serif;
+  text-wrap: balance;
+}
+
 .l2-wrap { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
 .l2-angosto { max-width: 800px; }
 
