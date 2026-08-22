@@ -515,7 +515,7 @@ export function Landing({
 /* ============================================================
    Portón de acceso — Google + email/contraseña
    ============================================================ */
-function AuthGate({ lang, google = true }: { lang: Idioma; google?: boolean }) {
+export function AuthGate({ lang, google = true }: { lang: Idioma; google?: boolean }) {
   const d = T[lang].diag;
   const {
     tab, setTab, isSignup,
@@ -588,7 +588,7 @@ function AuthGate({ lang, google = true }: { lang: Idioma; google?: boolean }) {
 /* ============================================================
    Chat con J — solo con sesión iniciada
    ============================================================ */
-function DiagChat({ lang, email }: { lang: Idioma; email: string }) {
+export function DiagChat({ lang, email }: { lang: Idioma; email: string }) {
   const d = T[lang].diag;
   const { desc, setDesc, resultado, cargando, esDemo, error, pedir, reiniciar } =
     useDiagnostico(lang, { error: d.errorConexion });

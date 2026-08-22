@@ -1,0 +1,248 @@
+/* ===========================================================================
+   Landing 2 — versión corporativa.
+
+   Todo va prefijado con .l2 y anidado bajo `.l2` para que no toque una sola
+   regla de la Landing 1. Las dos conviven en el mismo bundle y hay que poder
+   editar una sin romper la otra.
+
+   La paleta es la inversa de la 1: fondo claro, navy de alto contraste, y el
+   dorado de JOTA en un tono más profundo para que pase contraste AA sobre
+   claro (#e3b341 sobre blanco da 1.8:1, que es ilegible).
+   =========================================================================== */
+
+.l2 {
+  --l2-bg: #ffffff;
+  --l2-bg-alt: #f6f8fa;
+  --l2-tinta: #0d1b2a;      /* navy casi negro, para títulos */
+  --l2-texto: #33475b;      /* cuerpo: 8.6:1 sobre blanco */
+  --l2-tenue: #5c7189;      /* secundario: 5.1:1 sobre blanco */
+  --l2-linea: #dfe6ec;
+  --l2-linea-fuerte: #c6d2dd;
+  --l2-oro: #8a6a16;        /* dorado profundo: 5.6:1 sobre blanco */
+  --l2-oro-claro: #e3b341;  /* el dorado de marca, solo sobre oscuro */
+  --l2-oro-suave: #fdf6e4;
+  --l2-oscuro: #0d1b2a;
+
+  background: var(--l2-bg);
+  color: var(--l2-texto);
+  /* IBM Plex Sans para todo: es la tipografía corporativa de IBM, ya la carga
+     el layout, y sin la display de la 1 el registro cambia por completo. */
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.l2 *, .l2 *::before, .l2 *::after { box-sizing: border-box; }
+
+.l2-wrap { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+.l2-angosto { max-width: 800px; }
+
+.l2-skip {
+  position: absolute; left: -9999px; top: 0; z-index: 100;
+  background: var(--l2-oscuro); color: #fff; padding: 12px 20px; border-radius: 0 0 8px 0;
+}
+.l2-skip:focus { left: 0; }
+
+/* Foco visible en todo lo interactivo: se opera con teclado. */
+.l2 a:focus-visible, .l2 button:focus-visible, .l2 summary:focus-visible {
+  outline: 2px solid var(--l2-oro); outline-offset: 3px; border-radius: 4px;
+}
+
+/* --- Barra superior ------------------------------------------------------ */
+.l2-barra { background: var(--l2-oscuro); color: #cbd6e2; font-size: 13px; }
+.l2-barra-in { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-top: 9px; padding-bottom: 9px; }
+.l2-barra a { color: #fff; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; font-weight: 500; }
+.l2-barra a:hover { color: var(--l2-oro-claro); }
+@media (max-width: 640px) { .l2-barra-in > span { display: none; } .l2-barra-in { justify-content: flex-end; } }
+
+/* --- Nav ----------------------------------------------------------------- */
+.l2-nav { position: sticky; top: 0; z-index: 50; background: rgba(255,255,255,.92);
+  backdrop-filter: blur(10px); border-bottom: 1px solid var(--l2-linea); }
+.l2-nav-in { display: flex; align-items: center; gap: 28px; height: 68px; }
+.l2-logo { display: inline-flex; align-items: center; gap: 10px; text-decoration: none;
+  color: var(--l2-tinta); font-size: 17px; letter-spacing: -.01em; white-space: nowrap; }
+.l2-logo b { font-weight: 700; }
+.l2-badge { width: 30px; height: 30px; border-radius: 8px; display: grid; place-items: center;
+  background: var(--l2-oscuro); color: var(--l2-oro-claro); font-weight: 700; font-size: 15px; }
+.l2-links { display: none; gap: 26px; margin-left: 12px; }
+.l2-links a { color: var(--l2-texto); text-decoration: none; font-size: 14.5px; font-weight: 500; transition: color .18s; }
+.l2-links a:hover { color: var(--l2-oro); }
+.l2-nav-acc { display: flex; align-items: center; gap: 12px; margin-left: auto; }
+.l2-entrar { display: none; color: var(--l2-texto); text-decoration: none; font-size: 14.5px; font-weight: 500; }
+.l2-entrar:hover { color: var(--l2-oro); }
+.l2-idioma { display: flex; border: 1px solid var(--l2-linea); border-radius: 7px; overflow: hidden; }
+/* 44px de alto: es el mínimo táctil accesible. Con el padding chico que tenía
+   quedaban en 28px, imposibles de acertar con el pulgar. */
+.l2-idioma button { background: none; border: 0; padding: 0 12px; min-height: 44px; min-width: 44px;
+  font-size: 12px; font-weight: 600;
+  letter-spacing: .04em; color: var(--l2-tenue); cursor: pointer; transition: all .18s; }
+.l2-idioma button[aria-pressed="true"] { background: var(--l2-oscuro); color: #fff; }
+@media (min-width: 900px) { .l2-links, .l2-entrar { display: flex; } }
+
+/* --- Botones ------------------------------------------------------------- */
+.l2-btn { display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+  background: var(--l2-oscuro); color: #fff; text-decoration: none;
+  padding: 14px 26px; border-radius: 8px; font-size: 15px; font-weight: 600;
+  border: 1px solid var(--l2-oscuro); cursor: pointer; transition: background .2s, transform .2s;
+  /* 44px de alto mínimo: es el tamaño táctil accesible. */
+  min-height: 48px; }
+.l2-btn:hover { background: #1b2f45; transform: translateY(-1px); }
+/* nowrap: con el texto partido en dos líneas el botón crecía de alto y rompía
+   la fila del nav, que tiene altura fija. */
+.l2-btn, .l2-btn-2 { white-space: nowrap; }
+.l2-btn-sm { padding: 9px 16px; font-size: 14px; min-height: 40px; }
+/* En pantallas chicas el CTA del nav se sale y tapa el selector de idioma. Se
+   oculta: el hero tiene el mismo CTA a un centímetro de ahí, así que no se
+   pierde ninguna conversión. */
+@media (max-width: 620px) { .l2-btn-sm { display: none; } }
+.l2-btn-2 { display: inline-flex; align-items: center; justify-content: center;
+  background: transparent; color: var(--l2-tinta); text-decoration: none;
+  padding: 14px 24px; border-radius: 8px; font-size: 15px; font-weight: 600;
+  border: 1px solid var(--l2-linea-fuerte); cursor: pointer; transition: border-color .2s, background .2s;
+  min-height: 48px; }
+.l2-btn-2:hover { border-color: var(--l2-tinta); background: var(--l2-bg-alt); }
+
+/* --- Hero ---------------------------------------------------------------- */
+.l2-hero { padding-top: 76px; }
+.l2-eyebrow { font-size: 12.5px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--l2-oro); margin: 0 0 20px; }
+.l2-hero h1 { margin: 0; color: var(--l2-tinta); font-weight: 700;
+  font-size: clamp(38px, 6.2vw, 66px); line-height: 1.08; letter-spacing: -.03em; max-width: 17ch; }
+.l2-oro { color: var(--l2-oro); }
+.l2-lead { margin: 26px 0 0; font-size: clamp(16.5px, 2vw, 19px); line-height: 1.65;
+  color: var(--l2-texto); max-width: 60ch; }
+.l2-cta-fila { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 36px; }
+.l2-pie-cta { margin: 16px 0 0; font-size: 13.5px; color: var(--l2-tenue); }
+
+.l2-confianza { margin-top: 72px; border-top: 1px solid var(--l2-linea);
+  border-bottom: 1px solid var(--l2-linea); background: var(--l2-bg-alt); }
+.l2-confianza-in { display: grid; gap: 14px 32px; padding-top: 24px; padding-bottom: 24px;
+  grid-template-columns: 1fr; }
+@media (min-width: 640px) { .l2-confianza-in { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1000px) { .l2-confianza-in { grid-template-columns: repeat(4, 1fr); } }
+.l2-cf { display: flex; align-items: flex-start; gap: 9px; font-size: 13.5px; font-weight: 500; color: var(--l2-tinta); }
+.l2-chk { color: var(--l2-oro); flex: none; margin-top: 1px; }
+.l2-cruz { color: #b4442f; flex: none; margin-top: 3px; }
+
+/* --- Secciones ----------------------------------------------------------- */
+.l2-sec { padding: 88px 0; }
+.l2-alt { background: var(--l2-bg-alt); border-top: 1px solid var(--l2-linea); border-bottom: 1px solid var(--l2-linea); }
+.l2-cab { max-width: 62ch; margin-bottom: 52px; }
+.l2-cap { font-size: 12.5px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--l2-oro); margin: 0 0 14px; }
+.l2 h2 { margin: 0; color: var(--l2-tinta); font-weight: 700;
+  font-size: clamp(27px, 3.7vw, 40px); line-height: 1.18; letter-spacing: -.022em; }
+.l2-sub { margin: 16px 0 0; font-size: 16.5px; line-height: 1.65; color: var(--l2-texto); }
+.l2-fuente { margin: 32px 0 0; font-size: 13.5px; line-height: 1.7; color: var(--l2-tenue); max-width: 70ch; }
+
+.l2-grid3, .l2-grid4 { display: grid; gap: 18px; grid-template-columns: 1fr; }
+@media (min-width: 680px) { .l2-grid3, .l2-grid4 { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1000px) { .l2-grid3 { grid-template-columns: repeat(3, 1fr); }
+  .l2-grid4 { grid-template-columns: repeat(4, 1fr); } }
+
+.l2-card { background: var(--l2-bg); border: 1px solid var(--l2-linea); border-radius: 12px;
+  padding: 26px; height: 100%; }
+.l2-alt .l2-card { background: #fff; }
+.l2-card h3 { margin: 0 0 10px; font-size: 17px; font-weight: 650; color: var(--l2-tinta);
+  letter-spacing: -.012em; display: flex; align-items: flex-start; gap: 9px; line-height: 1.35; }
+.l2-card p { margin: 0; font-size: 14.5px; line-height: 1.7; color: var(--l2-texto); }
+
+.l2-lista { list-style: none; margin: 0; padding: 0; display: grid; gap: 11px; }
+.l2-lista li { display: flex; align-items: flex-start; gap: 9px; font-size: 14.5px; line-height: 1.6; }
+
+/* --- Las cuatro piezas del sistema --------------------------------------- */
+.l2-piezas { display: grid; gap: 0; border-top: 1px solid var(--l2-linea-fuerte); }
+.l2-pieza { display: grid; gap: 10px 28px; padding: 30px 0;
+  border-bottom: 1px solid var(--l2-linea-fuerte); grid-template-columns: 1fr; }
+@media (min-width: 860px) { .l2-pieza { grid-template-columns: 56px 1fr 1.25fr; align-items: start; } }
+.l2-pieza-n { font-size: 14px; font-weight: 700; color: var(--l2-oro); letter-spacing: .06em; padding-top: 3px; }
+.l2-pieza h3 { margin: 0; font-size: 21px; font-weight: 700; color: var(--l2-tinta); letter-spacing: -.018em; }
+.l2-pieza-d { margin: 7px 0 0; font-size: 15px; color: var(--l2-texto); }
+.l2-pieza-det { margin: 0; font-size: 14.5px; line-height: 1.75; color: var(--l2-tenue); }
+
+/* --- Los cinco pasos ------------------------------------------------------ */
+.l2-pasos { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+.l2-paso { display: grid; grid-template-columns: 58px 1fr; gap: 18px; padding: 24px 0;
+  border-bottom: 1px solid var(--l2-linea); }
+.l2-paso:last-child { border-bottom: 0; }
+.l2-paso-n { font-size: 26px; font-weight: 700; color: var(--l2-linea-fuerte); letter-spacing: -.03em; line-height: 1; }
+.l2-paso h3 { margin: 0 0 7px; font-size: 18px; font-weight: 650; color: var(--l2-tinta); letter-spacing: -.015em; }
+.l2-paso p { margin: 0; font-size: 14.5px; line-height: 1.7; color: var(--l2-texto); max-width: 68ch; }
+.l2-quien { display: inline-block; margin-top: 11px; font-size: 11.5px; font-weight: 600;
+  letter-spacing: .05em; text-transform: uppercase; color: var(--l2-oro);
+  background: var(--l2-oro-suave); border-radius: 5px; padding: 4px 9px; }
+
+/* --- Qué no hace ---------------------------------------------------------- */
+.l2-limites { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+.l2-limites li { display: flex; align-items: flex-start; gap: 12px; padding: 17px 0;
+  border-bottom: 1px solid var(--l2-linea); font-size: 15.5px; line-height: 1.65; color: var(--l2-texto); }
+.l2-limites li:last-child { border-bottom: 0; }
+
+/* --- Integraciones -------------------------------------------------------- */
+.l2-integra { display: grid; gap: 12px; grid-template-columns: 1fr; }
+@media (min-width: 640px) { .l2-integra { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1000px) { .l2-integra { grid-template-columns: repeat(4, 1fr); } }
+.l2-int { display: flex; flex-direction: column; align-items: flex-start; gap: 12px;
+  background: #fff; border: 1px solid var(--l2-linea); border-radius: 10px; padding: 18px;
+  font-size: 14.5px; font-weight: 500; color: var(--l2-tinta); }
+/* Lo que todavía no existe se ve distinto a propósito: si "en desarrollo" se
+   viera igual que "disponible", la página vendería algo que no está hecho. */
+.l2-int.pronto { border-style: dashed; color: var(--l2-tenue); }
+.l2-tag { font-size: 10.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  padding: 4px 9px; border-radius: 999px; color: var(--l2-oro); background: var(--l2-oro-suave); }
+.l2-int.pronto .l2-tag { color: var(--l2-tenue); background: var(--l2-bg-alt); border: 1px solid var(--l2-linea); }
+
+/* --- FAQ ------------------------------------------------------------------ */
+.l2-faq details { border-bottom: 1px solid var(--l2-linea); }
+.l2-faq summary { display: flex; align-items: center; justify-content: space-between; gap: 20px;
+  padding: 20px 2px; cursor: pointer; list-style: none;
+  font-size: 16.5px; font-weight: 600; color: var(--l2-tinta); letter-spacing: -.012em; transition: color .18s; }
+.l2-faq summary::-webkit-details-marker { display: none; }
+.l2-faq summary:hover { color: var(--l2-oro); }
+.l2-mas { flex: none; font-size: 21px; font-weight: 400; color: var(--l2-oro); transition: transform .2s; }
+.l2-faq details[open] .l2-mas { transform: rotate(45deg); }
+.l2-faq details[open] summary { color: var(--l2-oro); }
+.l2-faq p { margin: 0; padding: 0 2px 22px; font-size: 15px; line-height: 1.75;
+  color: var(--l2-texto); max-width: 68ch; }
+
+/* --- Cierre (oscuro) ------------------------------------------------------ */
+.l2-cierre { background: var(--l2-oscuro); color: #e6edf4; padding: 88px 0; text-align: center; }
+.l2-cierre h2 { color: #fff; }
+.l2-cierre > .l2-wrap > p { margin: 18px auto 0; font-size: 16.5px; line-height: 1.7;
+  color: #b9c7d6; max-width: 56ch; }
+.l2-chat { margin: 40px auto 0; max-width: 520px; text-align: left;
+  background: var(--panel); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+.l2-chat-cab { display: flex; align-items: center; gap: 11px; padding: 15px 18px;
+  border-bottom: 1px solid var(--line); }
+.l2-javatar { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center;
+  background: var(--gold); color: var(--gold-dark); font-weight: 700; }
+.l2-chat-n { font-size: 15px; color: var(--text); }
+.l2-chat-e { font-size: 12px; color: var(--dim); }
+.l2-nota { margin: 26px 0 0; font-size: 13.5px; color: #9fb1c4; }
+.l2-nota a { color: var(--l2-oro-claro); }
+
+/* --- Pie ------------------------------------------------------------------ */
+.l2-pie { background: var(--l2-bg-alt); border-top: 1px solid var(--l2-linea); padding-top: 56px; }
+.l2-pie-in { display: grid; gap: 36px; grid-template-columns: 1fr; padding-bottom: 44px; }
+@media (min-width: 760px) { .l2-pie-in { grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; } }
+.l2-pie-marca p { margin: 16px 0 0; font-size: 14px; line-height: 1.7; color: var(--l2-tenue); max-width: 40ch; }
+.l2-pie-mail { display: inline-block; margin-top: 14px; font-size: 14px; color: var(--l2-oro); font-weight: 500; }
+.l2-pie-col h4 { margin: 0 0 14px; font-size: 12.5px; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--l2-tinta); }
+.l2-pie-col ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.l2-pie-col a { font-size: 14.5px; color: var(--l2-texto); text-decoration: none; }
+.l2-pie-col a:hover { color: var(--l2-oro); }
+.l2-pie-legal { border-top: 1px solid var(--l2-linea); padding-top: 20px; padding-bottom: 26px;
+  font-size: 13px; color: var(--l2-tenue); }
+
+/* --- Aparición al scrollear ----------------------------------------------- */
+.l2-rev { opacity: 0; transform: translateY(12px); transition: opacity .35s ease-out, transform .35s ease-out; }
+.l2-rev.on { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  /* Sin movimiento, pero VISIBLE. Ocultar contenido a quien pide menos
+     animación es peor que animarlo. */
+  .l2-rev { opacity: 1; transform: none; transition: none; }
+  .l2-btn:hover { transform: none; }
+  .l2-mas { transition: none; }
+}

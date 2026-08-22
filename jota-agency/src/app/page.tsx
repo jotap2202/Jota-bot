@@ -1,19 +1,10 @@
-import { auth } from "@/auth";
-import { Landing } from "@/components/Landing";
-import { googleConfigurado } from "@/lib/config-auth";
-import { idiomaActual } from "@/lib/idioma-servidor";
-import { faltaEmpresa } from "@/lib/perfil";
+import { ServirLanding } from "@/components/ServirLanding";
 
+/**
+ * La home sirve la landing que indique LANDING_ACTIVA (ver
+ * src/lib/landing-activa.ts). Para mirar la otra sin cambiar nada están
+ * /v1 y /v2.
+ */
 export default async function Home() {
-  const session = await auth();
-  const email = session?.user?.email ?? null;
-
-  return (
-    <Landing
-      userEmail={email}
-      google={googleConfigurado()}
-      faltaEmpresa={await faltaEmpresa(email)}
-      langInicial={await idiomaActual()}
-    />
-  );
+  return <ServirLanding />;
 }

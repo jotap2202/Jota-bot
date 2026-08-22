@@ -1,4 +1,7 @@
 @import "tailwindcss";
+/* Landing 2 (corporativa). Todo su CSS vive anidado bajo `.l2`, así que no
+   afecta a la Landing 1 ni al resto del sitio. Ver src/lib/landing-activa.ts. */
+@import "./landing2.css";
 
 :root {
   --bg: #081619;
