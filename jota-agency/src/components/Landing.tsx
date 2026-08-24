@@ -504,6 +504,7 @@ export function Landing({
             {/* Acceso al panel de leads. Solo entra el equipo; al resto le avisa que es privado. */}
             <a href="/panel" className="badge" title={t.a11y.panel} aria-label={t.a11y.panel}>J</a>
             <a href={mailto(t.asuntoMail)} className="mono" style={{ color: "var(--gold)", fontSize: 13 }}>{EMAIL_CONTACTO}</a>
+            <a href="/app" className="mono" style={{ color: "var(--gold)", fontSize: 13 }}>{lang === "es" ? "La app" : "The app"}</a>
             <span className="mono">{t.footer}</span>
           </div>
         </div>

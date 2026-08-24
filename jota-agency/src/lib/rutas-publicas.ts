@@ -14,6 +14,7 @@ export const RUTAS_PUBLICAS = [
   "/", // landing
   "/v1", // landing 1 forzada — para comparar sin cambiar la home
   "/v2", // landing 2 forzada
+  "/app", // explica e instala la PWA — no muestra ningún dato
   "/acceder", // login y registro (+ /acceder/estado)
   "/diagnostico", // el gancho comercial: la página es pública, el gate está adentro
 

@@ -256,3 +256,82 @@
   .l2-btn:hover { transform: none; }
   .l2-mas { transition: none; }
 }
+
+/* ===========================================================================
+   /app — la página que explica e instala la aplicación.
+
+   Va sobre fondo oscuro a propósito: es la misma piel que el panel que se
+   está instalando, así que la persona ve a dónde va antes de entrar. Usa las
+   variables de marca que ya define globals.css.
+   =========================================================================== */
+
+.ap { min-height: 100vh; background: var(--bg); color: var(--text);
+  font-family: var(--font-body), system-ui, sans-serif; line-height: 1.65; }
+.ap *, .ap *::before, .ap *::after { box-sizing: border-box; }
+.ap a:focus-visible, .ap button:focus-visible {
+  outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 6px; }
+
+.ap-cab { display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  max-width: 760px; margin: 0 auto; padding: 22px 22px 0; }
+.ap-logo { display: inline-flex; align-items: center; gap: 10px; text-decoration: none;
+  color: var(--text); font-size: 16px; }
+.ap-logo b { font-weight: 700; }
+.ap-badge { width: 30px; height: 30px; border-radius: 9px; display: grid; place-items: center;
+  background: var(--gold); color: var(--gold-dark); font-weight: 700; font-size: 15px; }
+.ap-volver { color: var(--dim); text-decoration: none; font-size: 14px; }
+.ap-volver:hover { color: var(--gold); }
+
+.ap-main { max-width: 760px; margin: 0 auto; padding: 0 22px 90px; }
+.ap-hero { padding: 54px 0 8px; }
+.ap h1 { margin: 0; font-size: clamp(31px, 6vw, 46px); line-height: 1.1; letter-spacing: -.025em;
+  color: var(--text); font-family: var(--font-body), system-ui, sans-serif; font-weight: 700; }
+.ap-bajada { margin: 20px 0 0; font-size: 17px; line-height: 1.7; color: var(--dim); max-width: 58ch; }
+
+.ap-caja { margin-top: 34px; padding: 24px; border-radius: 16px;
+  background: var(--panel); border: 1px solid var(--line); }
+.ap-caja-d { margin: 14px 0 0; font-size: 14px; line-height: 1.7; color: var(--dim); }
+.ap-titulillo { margin: 0; font-size: 16px; font-weight: 650; color: var(--text); }
+.ap-ok { display: flex; align-items: center; gap: 9px; margin: 0;
+  font-size: 16px; font-weight: 650; color: var(--green); }
+.ap-chk { color: var(--gold); flex: none; }
+.ap-ok .ap-chk { color: var(--green); }
+
+.ap-btn { display: inline-flex; align-items: center; justify-content: center;
+  min-height: 50px; padding: 14px 28px; border-radius: 10px; border: 0; cursor: pointer;
+  background: var(--gold); color: var(--gold-dark); font-size: 16px; font-weight: 700;
+  font-family: inherit; transition: filter .2s, transform .2s; }
+.ap-btn:hover:not(:disabled) { filter: brightness(1.08); transform: translateY(-1px); }
+.ap-btn:disabled { opacity: .6; cursor: default; }
+.ap-btn-2 { margin-top: 18px; text-decoration: none;
+  background: transparent; color: var(--gold); border: 1px solid var(--gold); }
+.ap-btn-2:hover { background: rgba(227,179,65,.08); }
+
+.ap-sec { margin-top: 52px; }
+.ap h2 { margin: 0 0 16px; font-size: 21px; letter-spacing: -.018em; color: var(--text);
+  font-family: var(--font-body), system-ui, sans-serif; font-weight: 700; }
+.ap-sec > p { margin: 0; font-size: 15.5px; line-height: 1.75; color: var(--dim); max-width: 62ch; }
+
+.ap-lista { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; }
+.ap-lista li { display: flex; align-items: flex-start; gap: 11px; }
+.ap-lista li > div { display: flex; flex-direction: column; gap: 3px; }
+.ap-lista b { font-size: 15.5px; font-weight: 650; color: var(--text); }
+.ap-lista span { font-size: 14.5px; line-height: 1.65; color: var(--dim); }
+
+.ap-plats { display: grid; gap: 14px; }
+@media (min-width: 720px) { .ap-plats { grid-template-columns: repeat(3, 1fr); } }
+.ap-plat { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 20px; }
+.ap-plat h3 { margin: 0 0 12px; font-size: 14px; font-weight: 700; color: var(--gold);
+  letter-spacing: .01em; }
+.ap-plat ol { margin: 0; padding-left: 18px; display: grid; gap: 8px; }
+.ap-plat li { font-size: 14px; line-height: 1.6; color: var(--dim); }
+
+.ap-aviso { padding: 26px; border-radius: 16px;
+  background: rgba(227,179,65,.06); border: 1px solid rgba(227,179,65,.28); }
+.ap-aviso h2 { margin-bottom: 12px; }
+
+.ap-limites { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+.ap-limites li { padding: 15px 0; border-bottom: 1px solid var(--line);
+  font-size: 14.5px; line-height: 1.7; color: var(--dim); }
+.ap-limites li:last-child { border-bottom: 0; }
+
+@media (prefers-reduced-motion: reduce) { .ap-btn:hover:not(:disabled) { transform: none; } }

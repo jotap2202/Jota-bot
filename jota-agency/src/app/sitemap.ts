@@ -24,5 +24,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly",
       priority: 1,
     },
+    {
+      // /app sí es indexable: explica qué es la aplicación y cómo instalarla,
+      // sin mostrar ningún dato. Es la segunda página con contenido propio.
+      url: `${SITIO_URL}/app`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.6,
+    },
   ];
 }

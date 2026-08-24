@@ -314,6 +314,7 @@ export const T2: Record<Idioma, Contenido2> = {
           titulo: "Empresa",
           links: [
             { texto: "Pedir diagnóstico", href: "#cierre" },
+            { texto: "La app", href: "/app" },
             { texto: "Entrar al panel", href: "/acceder" },
           ],
         },
@@ -554,6 +555,7 @@ export const T2: Record<Idioma, Contenido2> = {
           titulo: "Company",
           links: [
             { texto: "Get a diagnosis", href: "#cierre" },
+            { texto: "The app", href: "/app" },
             { texto: "Sign in", href: "/acceder" },
           ],
         },
