@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>AI × 30 Years of Industry Knowledge</title>
+<style>
+  :root {
+    --bg: #faf9f7;
+    --ink: #16171b;
+    --muted: #6b6f76;
+    --line: #e7e5e1;
+    --accent: #b8722e;
+    --accent-soft: #f3e6d8;
+    --panel: #ffffff;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0; height: 100%;
+    background: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", "Helvetica Neue", Arial, sans-serif;
+    overflow: hidden;
+  }
+  .deck { position: relative; width: 100vw; height: 100vh; }
+  .slide {
+    position: absolute; inset: 0;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    background: var(--bg);
+    color: var(--ink);
+    padding: 6vw 8vw;
+  }
+  .slide.active { display: flex; }
+  .kicker {
+    font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--accent); font-weight: 700; margin-bottom: 20px;
+  }
+  h1 {
+    font-size: clamp(34px, 5vw, 64px);
+    line-height: 1.08; letter-spacing: -0.02em; margin: 0 0 18px; font-weight: 650;
+  }
+  h2 { font-size: clamp(26px, 3.4vw, 42px); line-height: 1.15; letter-spacing: -0.015em; margin: 0 0 28px; font-weight: 650; }
+  .sub { font-size: clamp(17px, 1.6vw, 22px); color: var(--muted); max-width: 46ch; line-height: 1.5; }
+  .stat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; max-width: 780px; margin-top: 12px; }
+  .stat { border-top: 2px solid var(--accent); padding-top: 14px; }
+  .stat .label { font-size: 15px; color: var(--muted); }
+  .msg { margin-top: 40px; font-size: clamp(18px, 2vw, 24px); font-weight: 500; max-width: 50ch; }
+  .flow { display: flex; align-items: center; gap: 0; flex-wrap: wrap; margin-top: 20px; }
+  .flow .node {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 999px;
+    padding: 14px 26px; font-size: 16px; font-weight: 600; white-space: nowrap;
+  }
+  .flow .arrow { color: var(--accent); font-size: 20px; padding: 0 10px; }
+  .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 20px; max-width: 900px; }
+  .compare .col { padding: 24px; border-radius: 16px; }
+  .compare .old { background: var(--panel); border: 1px solid var(--line); color: var(--muted); }
+  .compare .new { background: var(--ink); color: #fff; }
+  .compare .old .steps span { display: block; margin: 6px 0; }
+  .compare .new p { font-size: 18px; line-height: 1.5; margin: 0; }
+  .compare .label { font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 12px; opacity: 0.7; }
+  .mock {
+    margin-top: 24px; background: var(--panel); border: 1px solid var(--line); border-radius: 18px;
+    padding: 28px; max-width: 620px; box-shadow: 0 20px 60px rgba(0,0,0,0.06);
+  }
+  .mock .mbadge { display:inline-block; font-size:11px; letter-spacing:0.06em; text-transform:uppercase; color:var(--accent); background:var(--accent-soft); padding:4px 10px; border-radius:999px; font-weight:700; margin-bottom:14px; }
+  .mock .mline { background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 12px 16px; font-size: 15px; color: var(--muted); margin-bottom: 10px; }
+  .mock .mchip { display:inline-block; background: var(--bg); border:1px solid var(--line); border-radius:999px; padding:6px 12px; font-size:13px; margin: 3px 6px 0 0; }
+  .vflow { margin-top: 20px; display: flex; flex-direction: column; gap: 0; max-width: 520px; }
+  .vflow .vnode { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 14px 20px; font-size: 16px; font-weight: 600; }
+  .vflow .varrow { color: var(--accent); font-size: 18px; padding: 6px 0 6px 20px; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; max-width: 900px; margin-top: 20px; }
+  .two-col .colh { font-size: 13px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--accent); font-weight: 700; margin-bottom: 14px; }
+  .two-col ul { margin: 0; padding: 0; list-style: none; }
+  .two-col li { font-size: 17px; padding: 8px 0; border-bottom: 1px solid var(--line); }
+  ol.steps { margin-top: 20px; padding: 0; max-width: 620px; counter-reset: step; }
+  ol.steps li {
+    list-style: none; counter-increment: step; position: relative;
+    padding: 10px 0 10px 44px; font-size: 18px; font-weight: 500;
+  }
+  ol.steps li::before {
+    content: counter(step); position: absolute; left: 0; top: 8px;
+    width: 28px; height: 28px; border-radius: 50%; background: var(--ink); color: #fff;
+    font-size: 13px; font-weight: 700; display: flex; align-items: center; justify-content: center;
+  }
+  .footer { position: absolute; bottom: 32px; left: 8vw; right: 8vw; display: flex; justify-content: space-between; align-items: center; }
+  .progress { position: absolute; top: 0; left: 0; height: 3px; background: var(--accent); transition: width 0.25s ease; }
+  .counter { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .navhint { font-size: 12px; color: var(--muted); }
+  .concept-tag { display:inline-block; font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent); font-weight: 700; margin-bottom: 14px; }
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+  <div class="progress" id="progress" style="width: 11%;"></div>
+
+  <!-- 1 -->
+  <section class="slide active">
+    <div class="kicker">Joaquin Pozetti · Jota Agency</div>
+    <h1>AI × 30 Years of<br/>Industry Knowledge</h1>
+    <p class="sub">Exploring how intelligent systems could extend the value of an existing meetings, events &amp; travel platform ecosystem.</p>
+  </section>
+
+  <!-- 2 -->
+  <section class="slide">
+    <div class="kicker">Where you stand today</div>
+    <h2>What You've Already Built</h2>
+    <div class="stat-grid">
+      <div class="stat"><div class="label">30+ years</div>industry expertise</div>
+      <div class="stat"><div class="label">Working platforms</div>real, functioning technology</div>
+      <div class="stat"><div class="label">~85–90%</div>development complete</div>
+      <div class="stat"><div class="label">Real relationships</div>industry &amp; operational knowledge</div>
+    </div>
+    <p class="msg">The opportunity isn't starting over. It's adding intelligence to an existing foundation.</p>
+  </section>
+
+  <!-- 3 -->
+  <section class="slide">
+    <div class="kicker">A framework, not a proposal</div>
+    <h2>Where AI Can Add Value</h2>
+    <div class="flow">
+      <div class="node">Discover</div><span class="arrow">→</span>
+      <div class="node">Understand</div><span class="arrow">→</span>
+      <div class="node">Match</div><span class="arrow">→</span>
+      <div class="node">Automate</div><span class="arrow">→</span>
+      <div class="node">Learn</div>
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section class="slide">
+    <div class="kicker">One pattern worth considering</div>
+    <h2>From Search to Conversation</h2>
+    <div class="compare">
+      <div class="col old">
+        <div class="label">Traditional</div>
+        <div class="steps">
+          <span>Filters</span><span>Pages</span><span>Forms</span><span>Emails</span>
+        </div>
+      </div>
+      <div class="col new">
+        <div class="label">AI-assisted</div>
+        <p>"I need a 4-day incentive program for 120 executives in Maui…"</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 -->
+  <section class="slide">
+    <span class="concept-tag">Concept demonstration</span>
+    <h2>AI Meeting &amp; Event Concierge</h2>
+    <div class="mock">
+      <span class="mbadge">Not connected to any real system</span>
+      <div class="mline">"150-person incentive trip to Maui, 4 nights, luxury resort, airport transfers, welcome reception, two activities, final dinner."</div>
+      <span class="mchip">Attendees: 150</span>
+      <span class="mchip">Destination: Maui</span>
+      <span class="mchip">Duration: 4 nights</span>
+      <span class="mchip">Accommodation: luxury</span>
+      <span class="mchip">Missing: dates, budget</span>
+    </div>
+  </section>
+
+  <!-- 6 -->
+  <section class="slide">
+    <div class="kicker">The real asset</div>
+    <h2>Turning 30 Years of Knowledge Into a Digital Advantage</h2>
+    <div class="vflow">
+      <div class="vnode">John + Roxann's expertise</div>
+      <div class="varrow">↓</div>
+      <div class="vnode">Structured knowledge</div>
+      <div class="varrow">↓</div>
+      <div class="vnode">AI intelligence layer</div>
+      <div class="varrow">↓</div>
+      <div class="vnode">Planners / suppliers / travelers</div>
+    </div>
+  </section>
+
+  <!-- 7 -->
+  <section class="slide">
+    <div class="kicker">The operational side</div>
+    <h2>AI Agents &amp; Automation</h2>
+    <div class="vflow">
+      <div class="vnode">Inquiry</div>
+      <div class="varrow">↓</div>
+      <div class="vnode">AI qualification</div>
+      <div class="varrow">↓</div>
+      <div class="vnode">Requirements capture</div>
+      <div class="varrow">↓</div>
+      <div class="vnode">Matching / recommendations</div>
+      <div class="varrow">↓</div>
+      <div class="vnode">Follow-up</div>
+      <div class="varrow">↓</div>
+      <div class="vnode">Human handoff</div>
+    </div>
+  </section>
+
+  <!-- 8 -->
+  <section class="slide">
+    <div class="kicker">Where the line is</div>
+    <h2>Human + AI</h2>
+    <div class="two-col">
+      <div>
+        <div class="colh">AI handles</div>
+        <ul>
+          <li>Repetitive information</li>
+          <li>Organization</li>
+          <li>First response</li>
+          <li>Qualification</li>
+          <li>Search</li>
+          <li>Drafting</li>
+        </ul>
+      </div>
+      <div>
+        <div class="colh">Humans handle</div>
+        <ul>
+          <li>Relationships</li>
+          <li>Judgment</li>
+          <li>Negotiation</li>
+          <li>Creativity</li>
+          <li>Complex decisions</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9 -->
+  <section class="slide">
+    <div class="kicker">Let's talk</div>
+    <h2>What I'd Explore First</h2>
+    <ol class="steps">
+      <li>Understand the existing platform</li>
+      <li>Identify the highest-value AI opportunity</li>
+      <li>Build an isolated prototype</li>
+      <li>Test it against real workflows</li>
+      <li>Measure the value</li>
+      <li>Integrate gradually</li>
+    </ol>
+    <p class="msg">Not a giant rebuild. One well-chosen prototype, tested before it ever touches production.</p>
+  </section>
+
+  <div class="footer">
+    <span class="navhint">← → or click to navigate</span>
+    <span class="counter" id="counter">1 / 9</span>
+  </div>
+</div>
+
+<script>
+  const slides = document.querySelectorAll(".slide");
+  const progress = document.getElementById("progress");
+  const counter = document.getElementById("counter");
+  let i = 0;
+
+  function show(n) {
+    slides[i].classList.remove("active");
+    i = Math.max(0, Math.min(slides.length - 1, n));
+    slides[i].classList.add("active");
+    progress.style.width = ((i + 1) / slides.length * 100) + "%";
+    counter.textContent = (i + 1) + " / " + slides.length;
+  }
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowRight" || e.key === " " || e.key === "PageDown") show(i + 1);
+    if (e.key === "ArrowLeft" || e.key === "PageUp") show(i - 1);
+  });
+
+  document.getElementById("deck").addEventListener("click", (e) => {
+    const x = e.clientX / window.innerWidth;
+    show(x < 0.5 ? i - 1 : i + 1);
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>AI Meeting &amp; Event Concierge — Concept Demo</title>
+<style>
+  :root {
+    --bg: #faf9f7;
+    --panel: #ffffff;
+    --ink: #16171b;
+    --muted: #6b6f76;
+    --line: #e7e5e1;
+    --accent: #b8722e;
+    --accent-soft: #f3e6d8;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", "Helvetica Neue", Arial, sans-serif;
+  }
+  .wrap {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 56px 24px 96px;
+  }
+  .badge {
+    display: inline-block;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: var(--accent-soft);
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+  h1 {
+    font-size: clamp(28px, 4vw, 40px);
+    line-height: 1.15;
+    margin: 0 0 8px;
+    letter-spacing: -0.02em;
+  }
+  .sub {
+    color: var(--muted);
+    font-size: 16px;
+    margin: 0 0 40px;
+    max-width: 56ch;
+  }
+  label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--muted);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  textarea {
+    width: 100%;
+    min-height: 120px;
+    padding: 16px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--panel);
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--ink);
+    font-family: inherit;
+    resize: vertical;
+  }
+  textarea:focus { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .row { display: flex; justify-content: space-between; align-items: center; margin-top: 14px; }
+  button {
+    background: var(--ink);
+    color: #fff;
+    border: none;
+    border-radius: 999px;
+    padding: 13px 26px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  button:disabled { opacity: 0.5; cursor: default; }
+  .hint { color: var(--muted); font-size: 13px; }
+  .result {
+    margin-top: 40px;
+    display: none;
+  }
+  .result.visible { display: block; }
+  .card {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 28px;
+    margin-bottom: 16px;
+  }
+  .card h2 {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    margin: 0 0 18px;
+  }
+  .fields {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px 24px;
+  }
+  .field dt { font-size: 12px; color: var(--muted); margin-bottom: 4px; }
+  .field dd { margin: 0; font-size: 16px; font-weight: 500; }
+  .field dd.empty { color: var(--muted); font-weight: 400; font-style: italic; }
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+  .tag {
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 5px 12px;
+    font-size: 13px;
+  }
+  .tag.missing { background: var(--accent-soft); border-color: var(--accent-soft); color: var(--accent); }
+  .followup {
+    background: var(--ink);
+    color: #fff;
+    border-radius: 16px;
+    padding: 24px 28px;
+  }
+  .followup h2 { color: rgba(255,255,255,0.6); }
+  .followup p { font-size: 18px; margin: 0; line-height: 1.4; }
+  .error {
+    color: #a33;
+    background: #fdecec;
+    border: 1px solid #f3caca;
+    border-radius: 12px;
+    padding: 14px 18px;
+    font-size: 14px;
+    margin-top: 24px;
+    display: none;
+  }
+  .error.visible { display: block; }
+  .footer-note {
+    margin-top: 56px;
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+    font-size: 13px;
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <span class="badge">Concept demonstration — not connected to any real system</span>
+    <h1>AI Meeting &amp; Event Concierge</h1>
+    <p class="sub">Describe a request the way a planner naturally would. The model structures it into a working event brief and asks one smart follow-up question.</p>
+
+    <label for="input">Planner request</label>
+    <textarea id="input" placeholder="I'm planning a 150-person incentive trip to Maui for 4 nights. We need a luxury resort, airport transfers, a welcome reception, two group activities and a final dinner."></textarea>
+    <div class="row">
+      <button id="submit">Structure this request</button>
+      <span class="hint" id="hint"></span>
+    </div>
+
+    <div class="error" id="error"></div>
+
+    <div class="result" id="result">
+      <div class="card">
+        <h2>Structured event brief</h2>
+        <dl class="fields" id="fields"></dl>
+      </div>
+      <div class="card" id="tagsCard">
+        <h2>Events, activities &amp; requests</h2>
+        <div id="tags"></div>
+      </div>
+      <div class="followup">
+        <h2>Follow-up question</h2>
+        <p id="followupText"></p>
+      </div>
+    </div>
+
+    <p class="footer-note">This is a standalone prototype built for this conversation. It is not Jota Agency, Jota 24/7, or any part of your existing platform — it exists to make the idea concrete rather than theoretical.</p>
+  </div>
+
+<script>
+  const input = document.getElementById("input");
+  const submit = document.getElementById("submit");
+  const hint = document.getElementById("hint");
+  const result = document.getElementById("result");
+  const errorBox = document.getElementById("error");
+  const fields = document.getElementById("fields");
+  const tags = document.getElementById("tags");
+  const followupText = document.getElementById("followupText");
+
+  function field(label, value) {
+    const empty = value === null || value === undefined || value === "";
+    return `<div class="field"><dt>${label}</dt><dd class="${empty ? "empty" : ""}">${empty ? "not specified" : value}</dd></div>`;
+  }
+
+  function tagList(items, missing) {
+    if (!items || !items.length) return "";
+    return items.map((t) => `<span class="tag ${missing ? "missing" : ""}">${t}</span>`).join(" ");
+  }
+
+  async function run() {
+    const text = input.value.trim();
+    if (!text) return;
+    submit.disabled = true;
+    hint.textContent = "Structuring…";
+    errorBox.classList.remove("visible");
+    result.classList.remove("visible");
+
+    try {
+      const res = await fetch("/api/structure", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text }),
+      });
+      const data = await res.json();
+
+      if (!res.ok || data.error) {
+        errorBox.textContent = data.error === "parse_failed"
+          ? "The model returned something we couldn't parse as JSON. Raw output: " + (data.raw || "")
+          : "Error: " + (data.error || "Unknown error");
+        errorBox.classList.add("visible");
+        return;
+      }
+
+      const s = data.structured;
+      fields.innerHTML =
+        field("Attendees", s.attendees) +
+        field("Destination", s.destination) +
+        field("Duration", s.duration_nights ? s.duration_nights + " nights" : null) +
+        field("Accommodation", s.accommodation_tier) +
+        field("Transportation", s.transportation) +
+        field("Activities", s.activities_count);
+
+      tags.innerHTML =
+        tagList(s.events) +
+        tagList(s.special_requests) +
+        tagList(s.missing_fields, true);
+
+      followupText.textContent = s.follow_up_question || "—";
+      result.classList.add("visible");
+    } catch (err) {
+      errorBox.textContent = "Network/parse error: " + err.message;
+      errorBox.classList.add("visible");
+    } finally {
+      submit.disabled = false;
+      hint.textContent = "";
+    }
+  }
+
+  submit.addEventListener("click", run);
+  input.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) run();
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+{
+  "name": "ai-concierge-concept-demo",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Standalone concept demo for the John meeting. Not part of Jota Agency or Jota 24/7.",
+  "scripts": {
+    "start": "node server.mjs"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.70.0"
+  }
+}
