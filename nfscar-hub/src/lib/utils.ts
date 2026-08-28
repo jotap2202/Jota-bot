@@ -15,7 +15,19 @@ export function generateShortCode(): string {
 }
 
 export function getFullShortURL(code: string): string {
-  const domain = process.env.NEXT_PUBLIC_DOMAIN || "nfcscar.com";
+  let domain = process.env.NEXT_PUBLIC_DOMAIN;
+
+  if (!domain) {
+    // Use current domain if NEXT_PUBLIC_DOMAIN not set
+    if (typeof window !== "undefined") {
+      domain = `${window.location.protocol}//${window.location.host}`;
+    } else {
+      domain = "nfcscar.com";
+    }
+  } else if (!domain.includes("://")) {
+    domain = `https://${domain}`;
+  }
+
   return `${domain}/r/${code}`;
 }
 

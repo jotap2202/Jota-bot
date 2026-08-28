@@ -10,7 +10,8 @@ import { Modal } from "@/components/Modal";
 import { supabase } from "@/lib/supabase";
 import { formatDateShort, getFullShortURL, generateShortCode, copyToClipboard } from "@/lib/utils";
 import { Business, Location, NFCCard, NFCCardWithRelations } from "@/types";
-import { Plus, Copy, ExternalLink, Edit2, Trash2 } from "lucide-react";
+import { Plus, Copy, ExternalLink, Edit2, Trash2, BarChart3 } from "lucide-react";
+import Link from "next/link";
 
 export default function DashboardPage() {
   const [businesses, setBusinesses] = useState<Business[]>([]);
@@ -207,10 +208,18 @@ export default function DashboardPage() {
           title="Review Hub"
           description="Manage your NFC review cards and track customer engagement"
           action={
-            <Button onClick={() => setIsAddBusinessOpen(true)} size="md">
-              <Plus size={16} className="mr-2" />
-              New Business
-            </Button>
+            <div className="flex gap-2">
+              <Link href="/stats">
+                <Button variant="secondary" size="md">
+                  <BarChart3 size={16} className="mr-2" />
+                  Stats
+                </Button>
+              </Link>
+              <Button onClick={() => setIsAddBusinessOpen(true)} size="md">
+                <Plus size={16} className="mr-2" />
+                New Business
+              </Button>
+            </div>
           }
         />
 
