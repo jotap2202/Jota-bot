@@ -17,6 +17,7 @@ model User {
   credentials  ExchangeCredential[]
   bots         Bot[]
   snapshots    EquitySnapshot[]
+  shortLinks   ShortLink[]
 }
 
 model ExchangeCredential {
@@ -78,4 +79,18 @@ model EquitySnapshot {
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   equity    Float
   createdAt DateTime @default(now())
+}
+
+model ShortLink {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  shortCode String   @unique @db.VarChar(10)
+  originalUrl String
+  clicks    Int      @default(0)
+  createdAt DateTime @default(now())
+  expiresAt DateTime?
+
+  @@index([shortCode])
+  @@index([userId])
 }
